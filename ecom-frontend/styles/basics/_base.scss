@@ -11,26 +11,25 @@ body {
     width: 100%;
     min-height: 100vh;
     margin: 0;
-    font-family: MulishLight, sans-serif;
+    font-family: Lato, sans-serif;
     background-color: #fff;
     overflow-x: hidden;
-    @include for-scroll-bar;
     * {
         &::selection {
-            background-color: $clr1;
+            background-color: #fff;
             color: white;
         }
     }
 }
 
 button {
-    font-family: Mulish, 'sans-serif';
+    font-family: Lato, 'sans-serif';
     &:hover {
         cursor: pointer;
     }
 }
 input {
-    font-family: Mulish, 'sans-serif';
+    font-family: Lato, 'sans-serif';
 }
 select {
     &:hover {

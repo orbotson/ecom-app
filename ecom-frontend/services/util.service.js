@@ -3,4 +3,6 @@ export const utilService = {
 };
 
 //SWR fetch wrapper
-const fetcher = (...args) => fetch(...args).then(res => res.json());
+function fetcher(...args) {
+    return fetch(...args).then(res => res.json());
+}

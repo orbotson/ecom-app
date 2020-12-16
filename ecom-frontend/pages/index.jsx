@@ -1,3 +1,3 @@
-export default function Home() {
-    return <div className="home">NextJS</div>;
+export default function Grocery() {
+    return <div className="grocery">Grocery</div>;
 }

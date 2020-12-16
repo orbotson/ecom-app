@@ -1,4 +1,4 @@
-export const StorageService = {
+export const storageService = {
     load,
     store,
     remove,

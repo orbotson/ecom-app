@@ -11,6 +11,9 @@
         "next": "10.0.3",
         "react": "17.0.1",
         "react-dom": "17.0.1",
+        "react-dropdown": "^1.9.0",
+        "react-icons": "^4.1.0",
+        "react-svg-loader": "^3.0.3",
         "sass": "^1.30.0",
         "swr": "^0.3.9"
     }

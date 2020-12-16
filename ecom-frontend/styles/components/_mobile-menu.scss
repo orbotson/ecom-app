@@ -1,0 +1,46 @@
+.mobile-menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    height: 100vh;
+    background-color: #fff;
+    width: 316px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    .exit-btn-container {
+        height: 60px;
+        .exit-btn {
+            margin-inline-start: 45px;
+            font-size: rem(20px);
+            color: #77798c;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+    .join-btn-container {
+        height: 130px;
+        background-color: #f7f7f7;
+        .join-btn {
+            @include for-button;
+            padding: 0 15px;
+            height: 38px;
+            width: fit-content;
+            &:hover {
+                background-color: darken($main-clr, 3%);
+            }
+        }
+    }
+    .links {
+        padding: 40px 0;
+        a {
+            margin-block-end: 19px;
+            padding: 5px 45px;
+            font-size: rem(15px);
+            transition: 0.2s ease-in;
+            &:hover {
+                color: $main-clr;
+            }
+        }
+    }
+}
