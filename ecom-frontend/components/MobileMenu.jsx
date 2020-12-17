@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { IoCloseOutline } from 'react-icons/io5';
 
-export default function MobileMenu() {
+export default function MobileMenu({ isOpen, onClose }) {
     return (
-        <div className="mobile-menu">
+        <div className={`mobile-menu ${isOpen && 'active'}`}>
             <section className="exit-btn-container flex align-center">
-                <span className="exit-btn">
+                <span className="exit-btn" onClick={() => onClose(false)}>
                     <IoCloseOutline />
                 </span>
             </section>

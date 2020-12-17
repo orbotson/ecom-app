@@ -1,0 +1,51 @@
+.category-filter {
+    height: 68px;
+    padding: 15px 20px;
+    box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 2px;
+    .chosen-category {
+        font-weight: bold;
+    }
+    .filter-btn {
+        color: $main-clr;
+        background-color: #fff;
+        font-weight: bold;
+        font-size: rem(15px);
+        border: none;
+        transition: 0.2s;
+        &:hover {
+            color: darken($main-clr, 3%);
+        }
+    }
+    .categories-modal {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 70vh;
+        background-color: transparent;
+        width: 100%;
+        .close-modal-btn {
+            border-radius: 25px;
+            border: none;
+            background-color: #fff;
+            width: 40px;
+            height: 40px;
+            font-size: 1.3rem;
+        }
+    }
+    .category-cards {
+        padding: 20px;
+        height: 100%;
+        width: 100%;
+        .category-card {
+            margin: 10px;
+            background-color: rgb(247, 247, 247);
+            width: 33%;
+            .category-icon {
+                padding: 10px 15px;
+            }
+            .category-label {
+                font-weight: bold;
+            }
+        }
+    }
+}

@@ -4,9 +4,8 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import MobileMenu from './MobileMenu';
 
-export default function Navbar() {
+export default function Navbar({ isMenuActive, onToggleMenu }) {
     const [lang, setLang] = useState('English');
-    const [isMenuClicked, setIsMenuClicked] = useState(false);
 
     const langOptions = [
         { lang: 'Arabic', flagUrl: '/images/sa.svg' },
@@ -45,14 +44,15 @@ export default function Navbar() {
         };
     });
 
-    function onSelect() {
+    const onSelect = () => {
+        //i18n
         console.log('selected');
-    }
+    };
 
     return (
         <nav className="navbar flex space-between align-center">
             <div className="wrapper flex align-center">
-                <button className="mobile-menu-btn" onClick={() => setIsMenuClicked(true)}>
+                <button className="mobile-menu-btn" onClick={() => onToggleMenu(true)}>
                     <span></span>
                     <span></span>
                     <span></span>
@@ -62,8 +62,8 @@ export default function Navbar() {
                 </div>
             </div>
             <Dropdown className="lang-switcher" options={optionsWithIcons} onChange={onSelect} value={lang} />
-
-            <MobileMenu />
+            <MobileMenu isOpen={isMenuActive} onClose={onToggleMenu} />
+            {isMenuActive && <div className="screen" onClick={() => onToggleMenu(false)}></div>}
         </nav>
     );
 }
