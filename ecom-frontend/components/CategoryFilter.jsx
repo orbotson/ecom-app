@@ -5,11 +5,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 export default function CategoryFilter() {
     const [category, setCategory] = useState('No Category Selected');
     const [isFilterClicked, setIsFilterClicked] = useState(false);
-    const [modalStyle, setModalStyle] = useState({
-        left: '50%',
-        bottom: '0px',
-        transform: 'translateY(100%) translateY(100px) translateX(-50%)',
-    });
+    const [modalStyle, setModalStyle] = useState({});
 
     const categories = [
         { icon: '/images/apple.svg', label: 'Frutis & Vegetables' },
@@ -24,14 +20,11 @@ export default function CategoryFilter() {
         { icon: '/images/mirror.svg', label: 'Beauty & Health' },
     ];
 
-    //on filter button click => body.style.overflowY = hidden
     function onFilterBtnClick() {
         document.body.style.overflowY = 'hidden';
         setIsFilterClicked(true);
         setModalStyle({
             transform: 'translateY(0%) translateY(0px) translateX(-50%)',
-            bottom: '0px',
-            left: '50%',
         });
     }
 
@@ -40,8 +33,6 @@ export default function CategoryFilter() {
         setIsFilterClicked(false);
         setModalStyle({
             transform: 'translateY(100%) translateY(100px) translateX(-50%)',
-            bottom: '0px',
-            left: '50%',
         });
     }
 

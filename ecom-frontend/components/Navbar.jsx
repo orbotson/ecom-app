@@ -6,6 +6,12 @@ import MobileMenu from './MobileMenu';
 
 export default function Navbar({ isMenuActive, onToggleMenu }) {
     const [lang, setLang] = useState('English');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const handleMenuToggle = isOpen => {
+        console.log('handling isOpen:', isOpen);
+        setIsMenuOpen(isOpen);
+    };
 
     const langOptions = [
         { lang: 'Arabic', flagUrl: '/images/sa.svg' },
@@ -52,7 +58,7 @@ export default function Navbar({ isMenuActive, onToggleMenu }) {
     return (
         <nav className="navbar flex space-between align-center">
             <div className="wrapper flex align-center">
-                <button className="mobile-menu-btn" onClick={() => onToggleMenu(true)}>
+                <button className="mobile-menu-btn" onClick={() => handleMenuToggle(true)}>
                     <span></span>
                     <span></span>
                     <span></span>
@@ -62,8 +68,8 @@ export default function Navbar({ isMenuActive, onToggleMenu }) {
                 </div>
             </div>
             <Dropdown className="lang-switcher" options={optionsWithIcons} onChange={onSelect} value={lang} />
-            <MobileMenu isOpen={isMenuActive} onClose={onToggleMenu} />
-            {isMenuActive && <div className="screen" onClick={() => onToggleMenu(false)}></div>}
+            <MobileMenu isOpen={isMenuOpen} onClose={handleMenuToggle} />
+            {isMenuOpen && <div className="screen" onClick={() => handleMenuToggle(false)}></div>}
         </nav>
     );
 }
