@@ -18,11 +18,10 @@
     }
     .categories-modal {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 70vh;
         background-color: transparent;
         width: 100%;
+        height: 70%;
+        transition: 0.3s;
         .close-modal-btn {
             border-radius: 25px;
             border: none;
@@ -33,19 +32,33 @@
         }
     }
     .category-cards {
-        padding: 20px;
-        height: 100%;
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: max-content;
+        gap: 10px;
+        padding: 30px 30px 60px;
         width: 100%;
+        height: 100%;
+        overflow-y: auto;
         .category-card {
-            margin: 10px;
+            z-index: 100;
+            padding: 16px 10px;
+            border-radius: 10px;
             background-color: rgb(247, 247, 247);
-            width: 33%;
+            text-align: center;
             .category-icon {
+                width: 100%;
+                height: 80px;
                 padding: 10px 15px;
             }
             .category-label {
                 font-weight: bold;
             }
+        }
+    }
+
+    @media only screen and (max-width: 990px) and (min-width: 550px) {
+        .category-cards {
+            grid-template-columns: 1fr 1fr 1fr;
         }
     }
 }

@@ -4,7 +4,12 @@ import { IoCloseOutline } from 'react-icons/io5';
 
 export default function CategoryFilter() {
     const [category, setCategory] = useState('No Category Selected');
-    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [isFilterClicked, setIsFilterClicked] = useState(false);
+    const [modalStyle, setModalStyle] = useState({
+        left: '50%',
+        bottom: '0px',
+        transform: 'translateY(100%) translateY(100px) translateX(-50%)',
+    });
 
     const categories = [
         { icon: '/images/apple.svg', label: 'Frutis & Vegetables' },
@@ -19,29 +24,63 @@ export default function CategoryFilter() {
         { icon: '/images/mirror.svg', label: 'Beauty & Health' },
     ];
 
+    //on filter button click => body.style.overflowY = hidden
+    function onFilterBtnClick() {
+        document.body.style.overflowY = 'hidden';
+        setIsFilterClicked(true);
+        setModalStyle({
+            transform: 'translateY(0%) translateY(0px) translateX(-50%)',
+            bottom: '0px',
+            left: '50%',
+        });
+    }
+
+    function onCloseModal() {
+        document.body.style.overflowY = 'auto';
+        setIsFilterClicked(false);
+        setModalStyle({
+            transform: 'translateY(100%) translateY(100px) translateX(-50%)',
+            bottom: '0px',
+            left: '50%',
+        });
+    }
+
+    async function onCardClick(e, cardCategory) {
+        e.stopPropagation();
+        setCategory(cardCategory);
+        onCloseModal();
+        // label && await loadProducts(label);
+    }
+
     return (
         <div className="category-filter flex space-between align-center">
             <p className="chosen-category">{category}</p>
-            <button className="filter-btn" onClick={() => setIsFilterOpen(true)}>
+            <button className="filter-btn" onClick={onFilterBtnClick}>
                 Filter
             </button>
-            <section className="categories-modal flex flex-column">
-                <button className="close-modal-btn self-center">
-                    <IoCloseOutline />
-                </button>
-                <section className="category-cards flex wrap justify-center">
-                    {categories.map(({ icon, label }) => {
-                        return (
-                            <section key={label} className="category-card flex flex-column align-center justify-center">
-                                <span className="category-icon">
-                                    <Image src={icon} width={40} height={40} />
-                                </span>
-                                <span className="category-label">{label}</span>
-                            </section>
-                        );
-                    })}
+            {isFilterClicked && (
+                <section className="categories-modal flex flex-column" style={modalStyle} onClick={onCloseModal}>
+                    <button className="close-modal-btn self-center">
+                        <IoCloseOutline />
+                    </button>
+                    <section className="category-cards grid">
+                        {categories.map(({ icon, label }) => {
+                            return (
+                                <section
+                                    key={label}
+                                    className="category-card flex flex-column align-center justify-center"
+                                    onClick={e => onCardClick(e, label)}
+                                >
+                                    <span className="category-icon flex align-center justify-center">
+                                        <Image src={icon} alt="Category Icon" width={40} height={40} />
+                                    </span>
+                                    <span className="category-label">{label}</span>
+                                </section>
+                            );
+                        })}
+                    </section>
                 </section>
-            </section>
+            )}
         </div>
     );
 }
