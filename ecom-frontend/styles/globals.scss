@@ -9,9 +9,11 @@
 @import './basics/base';
 
 //Cmps
+@import './components/slider';
 @import './components/navbar';
 @import './components/mobile-menu';
 @import './components/category-filter';
+@import './components/card';
 
 //Pages
 @import './pages/home';

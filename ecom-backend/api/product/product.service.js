@@ -5,10 +5,11 @@ module.exports = {
     query,
 };
 
-function query() {
+async function query() {
     try {
         info('Feching products...');
-        return Promise.resolve(productsData);
+        console.log('products:', productsData);
+        return await Promise.resolve(productsData);
     } catch (err) {
         error('Error while fetching products.', err);
     }

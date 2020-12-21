@@ -1,0 +1,8 @@
+.home {
+    .cards-container {
+        width: 100%;
+        padding-block-end: 100px;
+        gap: 10px;
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+    }
+}

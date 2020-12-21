@@ -1,0 +1,107 @@
+.card {
+    border-radius: 6px;
+    border: 1px solid #f3f3f3;
+    transition: all 0.3s ease-in-out 0s;
+    cursor: pointer;
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px;
+        transform: translateY(-5px);
+    }
+    .img-container {
+        position: relative;
+        height: 180px;
+        .sale-label {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: $main-clr;
+            border-radius: 6px;
+            padding: 0.25rem 0.5rem;
+            font-size: rem(12px);
+            pointer-events: none;
+            color: #fff;
+            z-index: 999;
+        }
+        img {
+            margin: 0 auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
+    .product-info {
+        padding: 0 20px 20px;
+        .prices {
+            margin-block-end: 10px;
+            .price {
+                color: #0d1136;
+                font-size: 18px;
+                font-weight: 600;
+                line-height: 1;
+            }
+            .sale {
+                text-decoration: line-through;
+                color: #77798c;
+                font-size: rem(15px);
+                font-weight: 400;
+                padding: 0 5px;
+                margin-inline-start: 10px;
+            }
+        }
+        .name {
+            font-size: rem(14px);
+            color: rgb(153, 153, 153);
+            margin-block-end: 10px;
+        }
+        .add-btn,
+        .counter-btn {
+            width: 100%;
+            height: 36px;
+            border: none;
+            border-radius: 6px;
+            padding: 0;
+            cursor: pointer;
+            transition: all 0.35s ease-in-out 0s;
+        }
+        .add-btn {
+            background-color: #f3f3f3;
+            &:hover {
+                background-color: #019376;
+                border-color: #019376;
+                .btn-label {
+                    color: #fff;
+                }
+                .btn-icon {
+                    background-color: $main-clr;
+                    color: #fff;
+                }
+            }
+            .btn-label {
+                width: 100%;
+                text-align: center;
+            }
+            .btn-icon {
+                padding: 0 16px;
+                background-color: rgb(230, 230, 230);
+                height: 100%;
+                border-top-right-radius: 6px;
+                border-bottom-right-radius: 6px;
+                font-size: 1.2rem;
+            }
+        }
+        .counter-btn {
+            background-color: $main-clr;
+            color: #fff;
+            font-weight: bold;
+            .minus-btn,
+            .plus-btn {
+                color: #fff;
+                background-color: transparent;
+                padding: 10px;
+                height: 100%;
+                border: none;
+                font-size: 1.5rem;
+                font-weight: bold;
+            }
+        }
+    }
+}

@@ -2,11 +2,6 @@
     box-sizing: border-box;
     outline: none;
 }
-
-html {
-    width: 100vw;
-}
-
 body {
     width: 100%;
     min-height: 100vh;
@@ -14,14 +9,7 @@ body {
     font-family: Lato, sans-serif;
     background-color: #fff;
     overflow-x: hidden;
-    * {
-        &::selection {
-            background-color: #fff;
-            color: white;
-        }
-    }
 }
-
 button {
     font-family: Lato, 'sans-serif';
     &:hover {
