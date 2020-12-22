@@ -92,13 +92,12 @@ export default function Grocery({ products }) {
     );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const res = await fetch('http://localhost:3030/api/product');
     const products = await res.json();
     return {
         props: {
             products,
         },
-        revalidate: 5,
     };
 }

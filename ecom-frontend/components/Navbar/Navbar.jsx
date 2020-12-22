@@ -4,7 +4,7 @@ import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import MobileMenu from '../MobileMenu/MobileMenu';
 
-export default function Navbar({ isMenuActive, onToggleMenu }) {
+export default function Navbar() {
     const [lang, setLang] = useState('English');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
