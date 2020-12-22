@@ -20,28 +20,28 @@ export default function CategoryFilter() {
         { icon: '/images/mirror.svg', label: 'Beauty & Health' },
     ];
 
-    function onFilterBtnClick() {
+    const onFilterBtnClick = () => {
         document.body.style.overflowY = 'hidden';
         setIsFilterClicked(true);
         setModalStyle({
             transform: 'translateY(0%) translateY(0px) translateX(-50%)',
         });
-    }
+    };
 
-    function onCloseModal() {
+    const onCloseModal = () => {
         document.body.style.overflowY = 'auto';
         setIsFilterClicked(false);
         setModalStyle({
             transform: 'translateY(100%) translateY(100px) translateX(-50%)',
         });
-    }
+    };
 
-    async function onCardClick(e, cardCategory) {
+    const onCardClick = async (e, cardCategory) => {
         e.stopPropagation();
         setCategory(cardCategory);
         onCloseModal();
         // label && await loadProducts(label);
-    }
+    };
 
     return (
         <div className="category-filter flex space-between align-center">

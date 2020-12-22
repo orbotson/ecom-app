@@ -1,8 +1,30 @@
 .home {
+    padding-block-end: 100px;
     .cards-container {
         width: 100%;
-        padding-block-end: 100px;
         gap: 10px;
         grid-template-columns: repeat(2, minmax(180px, 1fr));
+        margin-block-end: 32px;
+    }
+    .load-btn-container {
+        width: 100%;
+        text-align: center;
+        .load-btn {
+            color: $main-clr;
+            background-color: #ffffff;
+            height: 38px;
+            padding: 0 15px;
+            font-size: rem(14px);
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 6px;
+            border: 1px solid #f1f1f1;
+            transition: all 0.3s ease 0s;
+            &:hover {
+                background-color: $main-clr;
+                border-color: $main-clr;
+                color: #ffffff;
+            }
+        }
     }
 }

@@ -4,25 +4,26 @@ export default function Card({ product, updateCart }) {
     const [productCount, setProductCount] = useState(0);
     const [isAddClicked, setIsAddClicked] = useState(false);
 
-    function handleDefBtnClick() {
+    const handleDefBtnClick = () => {
         setProductCount(productCount + 1);
         setIsAddClicked(true);
-    }
+        updateCart(product, 'add');
+    };
 
-    function handleMinusBtnClick() {
+    const handleMinusBtnClick = () => {
         updateCart(product, 'remove');
         productCount === 1 && setIsAddClicked(false);
         setProductCount(productCount - 1);
-    }
+    };
 
-    function handlePlusBtnClick() {
+    const handlePlusBtnClick = () => {
         setProductCount(productCount + 1);
         updateCart(product, 'add');
-    }
+    };
 
-    function getSalePercents(sale, originalPrice) {
+    const getSalePercents = (sale, originalPrice) => {
         return Math.floor((1 - sale / originalPrice) * 100).toFixed(0) + '%';
-    }
+    };
 
     const addBtn = (
         <button className="add-btn flex align-center" onClick={handleDefBtnClick}>

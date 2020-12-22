@@ -6,25 +6,39 @@ import Slider from '../components/Slider';
 import Card from '../components/Card';
 
 export default function Grocery({ products }) {
-    const [cart, setCart] = useState(storageService.load('cart') || null);
+    const [cart, setCart] = useState((typeof window !== 'undefined' && storageService.load('cart')) || []);
+    const [productsToShow, setProductsToShow] = useState(products.slice(0, 5));
+    const [next, setNext] = useState(5);
 
-    function updateCart(product, action = 'add') {
-        if (!window.localStorage) return;
+    const productsPerPage = 5;
 
-        const cart = storageService.load('cart');
+    const updateCart = (product, action = 'add') => {
+        const currCart = [...cart];
         let updatedCart;
 
         const productIdx = cart.findIndex(({ _id }) => _id === product._id);
         if (action === 'add') {
-            if (productIdx === -1) cart.push({ ...product, amount: 1 });
-            else cart[productIdx].amount++;
+            productIdx === -1 ? currCart.push({ ...product, amount: 1 }) : currCart[productIdx].amount++;
+            updatedCart = [...currCart];
         } else {
-            // const productIdx = cart.findIndex(cartProduct => cartProduct._id === product._id);
-            cart.splice(productIdx, 1);
+            currCart[productIdx].amount--;
+            if (currCart[productIdx].amount < 1) currCart.splice(productIdx, 1);
+            updatedCart = [...currCart];
         }
+
         storageService.store('cart', updatedCart);
         setCart(updatedCart);
-    }
+    };
+
+    const loadMorePosts = (start, end) => {
+        const nextProducts = products.slice(start, end);
+        setProductsToShow([...productsToShow, ...nextProducts]);
+    };
+
+    const handleLoadMoreClick = () => {
+        loadMorePosts(next, next + productsPerPage);
+        setNext(next + productsPerPage);
+    };
 
     return (
         <Layout>
@@ -33,18 +47,25 @@ export default function Grocery({ products }) {
                 <Slider />
                 <section className="cards-container grid">
                     {products &&
-                        products.map(product => (
+                        productsToShow.map(product => (
                             <section key={product._id}>
                                 <Card product={product} updateCart={updateCart} />
                             </section>
                         ))}
                 </section>
+                {products.length !== productsToShow.length && (
+                    <section className="load-btn-container">
+                        <button className="load-btn" onClick={handleLoadMoreClick}>
+                            Load More
+                        </button>
+                    </section>
+                )}
             </div>
         </Layout>
     );
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps() {
     const res = await fetch('http://localhost:3030/api/product');
     const products = await res.json();
     return {
