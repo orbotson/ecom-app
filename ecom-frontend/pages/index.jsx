@@ -1,16 +1,29 @@
-import { useState } from 'react';
-import { storageService } from '../services/storage.service.js';
-import CategoryFilter from '../components/CategoryFilter';
-import Layout from '../components/Layout';
-import Slider from '../components/Slider';
-import Card from '../components/Card';
+import { useEffect, useState } from 'react';
+import CategoryFilter from '../components/CategoryFilter/CategoryFilter';
+import Layout from '../components/Layout/Layout';
+import Slider from '../components/Slider/Slider';
+import Card from '../components/Card/Card';
 
 export default function Grocery({ products }) {
-    const [cart, setCart] = useState((typeof window !== 'undefined' && storageService.load('cart')) || []);
-    const [productsToShow, setProductsToShow] = useState(products.slice(0, 5));
+    const [productsCopy, setProductsCopy] = useState(products);
+    const [cart, setCart] = useState([]);
+    const [productsToShow, setProductsToShow] = useState(productsCopy.slice(0, 5));
     const [next, setNext] = useState(5);
 
     const productsPerPage = 5;
+
+    useEffect(() => {
+        const getCartData = () => {
+            const updatedProducts = productsCopy.map(product => {
+                const addedProduct = cart.find(cartProduct => product._id === cartProduct._id);
+                if (addedProduct) return addedProduct;
+                else return product;
+            });
+            setProductsCopy(updatedProducts);
+            setProductsToShow(updatedProducts.slice(0, productsToShow.length));
+        };
+        getCartData();
+    }, []);
 
     const updateCart = (product, action = 'add') => {
         const currCart = [...cart];
@@ -26,12 +39,11 @@ export default function Grocery({ products }) {
             updatedCart = [...currCart];
         }
 
-        storageService.store('cart', updatedCart);
         setCart(updatedCart);
     };
 
     const loadMorePosts = (start, end) => {
-        const nextProducts = products.slice(start, end);
+        const nextProducts = productsCopy.slice(start, end);
         setProductsToShow([...productsToShow, ...nextProducts]);
     };
 
@@ -40,26 +52,41 @@ export default function Grocery({ products }) {
         setNext(next + productsPerPage);
     };
 
+    const getTotalPrice = () => {
+        if (cart.length === 0) return '0.00';
+        let totalPrice = 0;
+        for (let product of cart) {
+            const { price, sale, amount } = product;
+            totalPrice += (sale || price) * amount;
+        }
+        return totalPrice.toFixed(2);
+    };
+
     return (
         <Layout>
             <div className="home">
                 <CategoryFilter />
                 <Slider />
                 <section className="cards-container grid">
-                    {products &&
+                    {productsCopy &&
                         productsToShow.map(product => (
                             <section key={product._id}>
                                 <Card product={product} updateCart={updateCart} />
                             </section>
                         ))}
                 </section>
-                {products.length !== productsToShow.length && (
+                {productsCopy.length !== productsToShow.length && (
                     <section className="load-btn-container">
                         <button className="load-btn" onClick={handleLoadMoreClick}>
                             Load More
                         </button>
                     </section>
                 )}
+                <button className="cart-btn flex align-center">
+                    <img className="icon" src="images/shopping-cart-32.png" />
+                    <span>{cart.length} Item</span>
+                    <span className="price-box flex align-center justify-center">${getTotalPrice()}</span>
+                </button>
             </div>
         </Layout>
     );

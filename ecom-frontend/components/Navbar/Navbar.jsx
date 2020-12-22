@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import MobileMenu from './MobileMenu';
+import MobileMenu from '../MobileMenu/MobileMenu';
 
 export default function Navbar({ isMenuActive, onToggleMenu }) {
     const [lang, setLang] = useState('English');

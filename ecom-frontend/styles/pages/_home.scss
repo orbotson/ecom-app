@@ -27,4 +27,39 @@
             }
         }
     }
+    .cart-btn {
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        width: calc(100% - 60px);
+        height: 45px;
+        padding: 2px 2px 2px 30px;
+        background-color: $main-clr;
+        border-radius: 60px;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 21px 36px;
+        border: 0;
+        z-index: 999;
+        cursor: pointer;
+        outline: 0;
+        .icon {
+            width: 18px;
+        }
+        :nth-child(2) {
+            font-size: rem(12px);
+            font-weight: bold;
+            padding: 0 10px 0 5px;
+            color: #fff;
+        }
+        .price-box {
+            width: 90px;
+            height: 41px;
+            border-radius: 28px;
+            background-color: #fff;
+            font-size: rem(12px);
+            font-weight: bold;
+            color: $main-clr;
+            margin-inline-start: auto;
+            margin-inline-end: 0;
+        }
+    }
 }
