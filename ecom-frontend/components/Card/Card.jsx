@@ -11,14 +11,14 @@ export default function Card({ product, updateCart }) {
     };
 
     const handleMinusBtnClick = () => {
-        updateCart(product, 'remove');
+        updateCart(product, 'decrease');
         productCount === 1 && setIsAddClicked(false);
         setProductCount(productCount - 1);
     };
 
     const handlePlusBtnClick = () => {
         setProductCount(productCount + 1);
-        updateCart(product, 'add');
+        updateCart(product, 'increase');
     };
 
     const getSalePercents = (sale, originalPrice) => {
@@ -49,7 +49,9 @@ export default function Card({ product, updateCart }) {
     return (
         <div className="card flex flex-column">
             <section className="img-container flex">
-                {product.sale > 0 && <section className="sale-label">{getSalePercents(product.sale, product.price)}</section>}
+                {product.sale > 0 && (
+                    <section className="sale-label">{getSalePercents(product.sale, product.price)}</section>
+                )}
                 <img src={`${product.imgUrl}`} alt="Product" />
             </section>
             <section className="product-info">

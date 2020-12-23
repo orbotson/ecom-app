@@ -3,6 +3,7 @@ import CategoryFilter from '../components/CategoryFilter/CategoryFilter';
 import Layout from '../components/Layout/Layout';
 import Slider from '../components/Slider/Slider';
 import Card from '../components/Card/Card';
+import CartModal from '../components/CartModal/CartModal';
 
 export default function Grocery({ products }) {
     const [productsCopy, setProductsCopy] = useState(products);
@@ -25,17 +26,24 @@ export default function Grocery({ products }) {
         getCartData();
     }, []);
 
-    const updateCart = (product, action = 'add') => {
+    useEffect(() => {
+        console.log('cart:', cart);
+    });
+
+    const updateCart = (product, action) => {
         const currCart = [...cart];
         let updatedCart;
 
         const productIdx = cart.findIndex(({ _id }) => _id === product._id);
-        if (action === 'add') {
+        if (action === 'increase') {
             productIdx === -1 ? currCart.push({ ...product, amount: 1 }) : currCart[productIdx].amount++;
             updatedCart = [...currCart];
-        } else {
+        } else if (action === 'decrease') {
             currCart[productIdx].amount--;
             if (currCart[productIdx].amount < 1) currCart.splice(productIdx, 1);
+            updatedCart = [...currCart];
+        } else {
+            currCart.splice(productIdx, 1);
             updatedCart = [...currCart];
         }
 
@@ -83,10 +91,11 @@ export default function Grocery({ products }) {
                     </section>
                 )}
                 <button className="cart-btn flex align-center">
-                    <img className="icon" src="images/shopping-cart-32.png" />
+                    <img className="icon" src="images/shopping-cart-white.svg" />
                     <span>{cart.length} Item</span>
                     <span className="price-box flex align-center justify-center">${getTotalPrice()}</span>
                 </button>
+                <CartModal cart={cart} totalPrice={getTotalPrice} updateCart={updateCart} />
             </div>
         </Layout>
     );

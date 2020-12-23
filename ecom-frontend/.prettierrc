@@ -5,5 +5,5 @@
     "jsxSingleQuote": false,
     "semi": true,
     "singleQuote": true,
-    "printWidth": 130
+    "printWidth": 120
 }
