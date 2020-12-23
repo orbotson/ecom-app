@@ -8,7 +8,6 @@ module.exports = {
 async function query() {
     try {
         info('Feching products...');
-        console.log('products:', productsData);
         return await Promise.resolve(productsData);
     } catch (err) {
         error('Error while fetching products.', err);
