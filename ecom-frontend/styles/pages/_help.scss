@@ -1,0 +1,17 @@
+.help {
+    min-height: calc(100vh - 68px);
+    background-color: #f7f7f7;
+    padding: 30px;
+    header {
+        font-family: PoppinsBold, sans-serif;
+        font-size: rem(21px);
+        font-weight: bold;
+        line-height: 1.2;
+        width: 100%;
+        text-align: center;
+        margin-block-end: 25px;
+    }
+    .accordion-container {
+        margin-block-end: 60px;
+    }
+}

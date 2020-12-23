@@ -1,0 +1,24 @@
+.accordion-item {
+    position: relative;
+    cursor: pointer;
+    font-size: rem(15px);
+    font-weight: bold;
+    line-height: 1.5;
+    border: 1px solid #f1f1f1;
+    border-radius: 6px;
+    margin-block-end: 5px;
+    .Collapsible {
+        border-radius: 6px;
+        background-color: #fff;
+    }
+    .Collapsible__trigger {
+        display: inline-block;
+        padding: 23px 25px 23px 30px;
+    }
+    .Collapsible__contentInner {
+        font-weight: normal;
+        line-height: 1.75;
+        color: #77798c;
+        padding: 0px 30px 23px;
+    }
+}

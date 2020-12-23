@@ -95,7 +95,7 @@ export default function Grocery({ products }) {
                     <span>{cart.length} Item</span>
                     <span className="price-box flex align-center justify-center">${getTotalPrice()}</span>
                 </button>
-                <CartModal cart={cart} totalPrice={getTotalPrice} updateCart={updateCart} />
+                {/* <CartModal cart={cart} totalPrice={getTotalPrice} updateCart={updateCart} /> */}
             </div>
         </Layout>
     );
