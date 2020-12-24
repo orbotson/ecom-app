@@ -5,9 +5,8 @@ export default function Card({ product, updateCart }) {
     const [isAddClicked, setIsAddClicked] = useState(false);
 
     const handleDefBtnClick = () => {
-        setProductCount(productCount + 1);
         setIsAddClicked(true);
-        updateCart(product, 'add');
+        handlePlusBtnClick();
     };
 
     const handleMinusBtnClick = () => {

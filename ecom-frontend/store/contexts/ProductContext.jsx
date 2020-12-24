@@ -1,15 +1,30 @@
-// import React, { createContext, useReducer } from 'react';
-// import { ProductReducer } from '../reducers/ProductReducer';
-// import { productService } from '../../services/product.service';
+import React, { createContext, useReducer } from 'react';
+import { ProductReducer } from '../reducers/ProductReducer';
 
-// const initialState = {};
+const initialState = {
+    shoppingCart: [],
+};
 
-// //Actions
+//Actions
+const UPDATE_CART = 'UPDATE_CART';
 
-// export const ProductContext = createContext(initialState);
+export const ProductContext = createContext(initialState);
 
-// export const ProducContextProvider = ({ children }) => {
-//     const [state, dispatch] = useReducer(ProductReducer, initialState);
+export const ProductContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(ProductReducer, initialState);
 
-//     return <ProductContext.Provider value={{}}>{children}</ProductContext.Provider>;
-// };
+    function updateShoppingCart(cartData) {
+        dispatch({ type: UPDATE_CART, cartData });
+    }
+
+    return (
+        <ProductContext.Provider
+            value={{
+                shoppingCart: state.shoppingCart,
+                updateShoppingCart,
+            }}
+        >
+            {children}
+        </ProductContext.Provider>
+    );
+};

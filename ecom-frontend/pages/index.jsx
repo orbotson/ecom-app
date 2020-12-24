@@ -1,22 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import Head from 'next/head';
 import CategoryFilter from '../components/CategoryFilter/CategoryFilter';
 import Layout from '../components/Layout/Layout';
 import Slider from '../components/Slider/Slider';
 import Card from '../components/Card/Card';
 import CartModal from '../components/CartModal/CartModal';
+import { ProductContext } from '../store/contexts/ProductContext';
+import { utilService } from '../services/util.service';
 
 export default function Grocery({ products }) {
+    const { shoppingCart, updateShoppingCart } = useContext(ProductContext);
     const [productsCopy, setProductsCopy] = useState(products);
-    const [cart, setCart] = useState([]);
     const [productsToShow, setProductsToShow] = useState(productsCopy.slice(0, 5));
     const [next, setNext] = useState(5);
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const productsPerPage = 5;
 
     useEffect(() => {
         const getCartData = () => {
             const updatedProducts = productsCopy.map(product => {
-                const addedProduct = cart.find(cartProduct => product._id === cartProduct._id);
+                const addedProduct = shoppingCart.find(cartProduct => product._id === cartProduct._id);
                 if (addedProduct) return addedProduct;
                 else return product;
             });
@@ -26,24 +30,24 @@ export default function Grocery({ products }) {
         getCartData();
     }, []);
 
-    const updateCart = (product, action) => {
-        const currCart = [...cart];
-        let updatedCart;
+    useEffect(() => {
+        setTotalPrice(utilService.getPriceDetails(shoppingCart).finalPrice);
+    }, [shoppingCart]);
 
-        const productIdx = cart.findIndex(({ _id }) => _id === product._id);
+    const updateCart = (product, action) => {
+        const updatedCart = [...shoppingCart];
+
+        const productIdx = shoppingCart.findIndex(({ _id }) => _id === product._id);
         if (action === 'increase') {
-            productIdx === -1 ? currCart.push({ ...product, amount: 1 }) : currCart[productIdx].amount++;
-            updatedCart = [...currCart];
+            productIdx === -1 ? updatedCart.push({ ...product, amount: 1 }) : updatedCart[productIdx].amount++;
         } else if (action === 'decrease') {
-            currCart[productIdx].amount--;
-            if (currCart[productIdx].amount < 1) currCart.splice(productIdx, 1);
-            updatedCart = [...currCart];
+            updatedCart[productIdx].amount--;
+            if (updatedCart[productIdx].amount < 1) updatedCart.splice(productIdx, 1);
         } else {
-            currCart.splice(productIdx, 1);
-            updatedCart = [...currCart];
+            updatedCart.splice(productIdx, 1);
         }
 
-        setCart(updatedCart);
+        updateShoppingCart(updatedCart);
     };
 
     const loadMorePosts = (start, end) => {
@@ -56,18 +60,11 @@ export default function Grocery({ products }) {
         setNext(next + productsPerPage);
     };
 
-    const getTotalPrice = () => {
-        if (cart.length === 0) return '0.00';
-        let totalPrice = 0;
-        for (let product of cart) {
-            const { price, sale, amount } = product;
-            totalPrice += (sale || price) * amount;
-        }
-        return totalPrice.toFixed(2);
-    };
-
     return (
         <Layout>
+            <Head>
+                <title>Grocery</title>
+            </Head>
             <div className="home">
                 <CategoryFilter />
                 <Slider />
@@ -88,10 +85,10 @@ export default function Grocery({ products }) {
                 )}
                 <button className="cart-btn flex align-center">
                     <img className="icon" src="images/shopping-cart-white.svg" />
-                    <span>{cart.length} Item</span>
-                    <span className="price-box flex align-center justify-center">${getTotalPrice()}</span>
+                    <span>{shoppingCart.length} Item</span>
+                    <span className="price-box flex align-center justify-center">${totalPrice}</span>
                 </button>
-                {/* <CartModal cart={cart} totalPrice={getTotalPrice} updateCart={updateCart} /> */}
+                {/* <CartModal cart={cart} totalPrice={getPriceDetails} updateCart={updateCart} /> */}
             </div>
         </Layout>
     );

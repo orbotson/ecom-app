@@ -1,3 +1,4 @@
+import Link from 'next';
 import { IoCloseOutline } from 'react-icons/io5';
 
 export default function CartModal({ cart, totalPrice }) {
@@ -49,10 +50,10 @@ export default function CartModal({ cart, totalPrice }) {
                     )}
                 </main>
                 <span className="voucher">Do you have a voucher?</span>
-                <section className="checkout-btn flex space-between">
+                <Link className="checkout-btn flex space-between" href="/checkout">
                     <span className="self-center">Checkout</span>
                     <span className="total-price flex align-center">${totalPrice()}</span>
-                </section>
+                </Link>
             </div>
         </div>
     );

@@ -1,0 +1,164 @@
+.checkout {
+    .order-info {
+        padding: 40px 15px 30px;
+        header {
+            text-align: center;
+            font-size: rem(15px);
+            font-family: LatoBold, sans-serif;
+            margin-block-end: 40px;
+        }
+        .products-list {
+            width: 100%;
+            padding: 0 15px;
+            margin-block-end: 20px;
+            border-block-end: 1px solid #e6e6e6;
+            .product {
+                font-size: rem(14px);
+                margin-block-end: 25px;
+                .amount {
+                    font-weight: bold;
+                }
+                .mult,
+                .details,
+                .price {
+                    color: #77798c;
+                    color: #77798c;
+                }
+                .mult {
+                    margin: 0 12px;
+                }
+                .details {
+                    margin-inline-end: 15px;
+                }
+                .price {
+                    margin-inline-start: auto;
+                }
+            }
+        }
+        .no-products {
+            color: #77798c;
+            font-size: rem(14px);
+            margin-block-end: 20px;
+            img {
+                width: 100px;
+                margin-block-end: 50px;
+            }
+        }
+        .price-calculation {
+            padding: 20px 15px 0px;
+            width: 100%;
+            > * {
+                margin-block-end: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: rem(14px);
+                color: #77798c;
+            }
+            .discount {
+                margin-block-end: 20px;
+            }
+            .total {
+                font-weight: bold;
+                color: black;
+                .txt::after {
+                    content: '(incl. VAT)';
+                    font-size: rem(11px);
+                    margin-inline-start: 5px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    .checkout-info {
+        padding: 20px;
+        .cards-container {
+            margin-block-end: 20px;
+            padding: 20px;
+            box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 16px 0px;
+
+            .address-list {
+                // .address-card {
+                .sub-card {
+                    position: relative;
+                    // padding: 15px;
+                    margin-block-end: 15px;
+                    input {
+                        position: absolute;
+                        visibility: hidden;
+                    }
+                    input:checked + label {
+                        background-color: #fff;
+                        border: 1px solid $main-clr;
+                    }
+                    label {
+                        cursor: pointer;
+                        padding: 15px;
+                        background-color: #f7f7f7;
+                        border-radius: 6px;
+                        flex: 1 1 100%;
+                        .address-title {
+                            font-size: rem(13px);
+                            font-weight: bold;
+                            margin-block-end: 5px;
+                            text-transform: capitalize;
+                            line-height: 1.2;
+                        }
+                        .address-details {
+                            color: #424561;
+                            font-size: rem(15px);
+                        }
+                        .address-btns {
+                            position: absolute;
+                            top: 10px;
+                            right: 10px;
+                            opacity: 0;
+                            visibility: hidden;
+                            transition: all 0.2s ease-in-out 0s;
+                            img {
+                                width: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .delivery-schdule {
+        }
+        .contact-number {
+        }
+        .payment-option {
+        }
+    }
+    .cards-header {
+        line-height: 1.2;
+        font-size: rem(19px);
+        margin-block-end: 35px;
+        .step {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            color: #fff;
+            background-color: $main-clr;
+            font-size: rem(15px);
+            margin-inline-end: 15px;
+            height: 30px;
+            width: 30px;
+        }
+        .add-address-btn {
+            font-weight: bold;
+            color: $main-clr;
+            border: none;
+            background-color: #fff;
+            margin-inline-start: auto;
+            .plus {
+                margin-inline-end: 8px;
+                font-size: rem(18px);
+            }
+            .txt {
+                font-size: rem(13px);
+            }
+        }
+    }
+}
