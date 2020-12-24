@@ -26,10 +26,6 @@ export default function Grocery({ products }) {
         getCartData();
     }, []);
 
-    useEffect(() => {
-        console.log('cart:', cart);
-    });
-
     const updateCart = (product, action) => {
         const currCart = [...cart];
         let updatedCart;
