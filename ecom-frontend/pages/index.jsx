@@ -7,10 +7,11 @@ import Card from '../components/Card/Card';
 import CartModal from '../components/CartModal/CartModal';
 import { ProductContext } from '../store/contexts/ProductContext';
 import { utilService } from '../services/util.service';
+import Image from 'next/image';
 
 export default function Grocery({ products }) {
     const { shoppingCart, updateShoppingCart } = useContext(ProductContext);
-    const [productsCopy, setProductsCopy] = useState(products);
+    const [productsCopy, setProductsCopy] = useState([...products]);
     const [productsToShow, setProductsToShow] = useState(productsCopy.slice(0, 5));
     const [next, setNext] = useState(5);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -67,7 +68,12 @@ export default function Grocery({ products }) {
             </Head>
             <div className="home">
                 <CategoryFilter />
-                <Slider />
+                <Slider
+                    items={[
+                        <Image src="/images/grocery-banner-img-one.jpg" width={670} height={201} layout="responsive" />,
+                        <Image src="/images/grocery-banner-img-two.jpg" width={670} height={201} layout="responsive" />,
+                    ]}
+                />
                 <section className="cards-container grid">
                     {productsCopy &&
                         productsToShow.map(product => (

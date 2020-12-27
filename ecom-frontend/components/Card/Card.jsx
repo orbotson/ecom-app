@@ -55,8 +55,8 @@ export default function Card({ product, updateCart }) {
             </section>
             <section className="product-info">
                 <div className="prices">
-                    <span className="price">${product.price}</span>
-                    {product.sale > 0 && <span className="sale">${product.sale}</span>}
+                    <span className="price">${product.sale > 0 ? product.sale : product.price}</span>
+                    {product.sale > 0 && <span className="sale">${product.price}</span>}
                 </div>
                 <p className="name">{product.name}</p>
                 {btnToDisplay}

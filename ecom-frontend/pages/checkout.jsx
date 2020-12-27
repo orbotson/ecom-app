@@ -3,18 +3,19 @@ import Head from 'next/head';
 import Layout from '../components/Layout/Layout';
 import { ProductContext } from '../store/contexts/ProductContext';
 import { utilService } from '../services/util.service';
+import Slider from '../components/Slider/Slider';
 
 export default function Checkout() {
     const { shoppingCart } = useContext(ProductContext);
     const [prices, setPrices] = useState({});
-    const [addresses, setAddress] = useState([
+    const addresses = [
         {
             label: 'Home',
             details: '27 Street, 2569 Heritage Road Visalia, CA 93291',
         },
         { label: 'Office', details: '33 Baker Street, Crescent Road, CA 65746' },
-    ]);
-    const [deliveryOptions, setDeliveryOptions] = useState([
+    ];
+    const deliveryOptions = [
         {
             label: '8am-11am',
             txt: '8.00 AM - 11.00 AM',
@@ -35,11 +36,16 @@ export default function Checkout() {
             label: 'Next Day',
             txt: 'Next Day',
         },
-    ]);
-    const [contactNums, setContactNums] = useState([
+    ];
+    const contactNums = [
         { label: 'Primary', num: '202-555-0191' },
         { label: 'Secondary', num: '202-555-0701' },
-    ]);
+    ];
+    const creditCards = [
+        { vendorImg: 'images/paypal.png', lastNums: '4580', owner: 'Jhon Doe Smith' },
+        { vendorImg: 'images/visa.png', lastNums: '8750', owner: 'Jane Doe Smith' },
+        { vendorImg: 'images/mastercard.png', lastNums: '3421', owner: 'Jhon Doe Smith' },
+    ];
 
     useEffect(() => {
         setPrices(utilService.getPriceDetails(shoppingCart));
@@ -69,13 +75,13 @@ export default function Checkout() {
         return addresses.map(({ label, details }, idx) => {
             return (
                 <li className="sub-card" key={idx}>
-                    <input type="radio" value={label} name="radio" id={`address-${label}`} />
+                    <input type="radio" value={label} name="address" id={`address-${label}`} />
                     <label className="flex flex-column" htmlFor={`address-${label}`}>
                         <span className="address-title">{label}</span>
                         <span className="address-details">{details}</span>
-                        <div className="address-btns">
-                            <img src="images/pencil.svg" alt="Edit Button" title="edit" />
-                            <img src="images/delete.svg" alt="Edit Button" title="edit" />
+                        <div className="edit-remove-btns">
+                            <img src="images/pencil.svg" alt="Edit Button" title="Edit" />
+                            <img src="images/delete.svg" alt="Remove Button" title="Remove" />
                         </div>
                     </label>
                 </li>
@@ -87,7 +93,7 @@ export default function Checkout() {
         return deliveryOptions.map(({ label, txt }, idx) => {
             return (
                 <li className="sub-card" key={idx}>
-                    <input type="radio" value={label} name="radio" id={`address-${label}`} />
+                    <input type="radio" value={label} name="delivery" id={`address-${label}`} />
                     <label className="flex flex-column" htmlFor={`address-${label}`}>
                         <span className="address-title">{label}</span>
                         <span className="address-details">{txt}</span>
@@ -101,16 +107,37 @@ export default function Checkout() {
         return contactNums.map(({ label, num }, idx) => {
             return (
                 <li className="sub-card" key={idx}>
-                    <input type="radio" value={label} name="radio" id={`address-${label}`} />
+                    <input type="radio" value={label} name="contact" id={`address-${label}`} />
                     <label className="flex flex-column" htmlFor={`address-${label}`}>
                         <span className="address-title">{label}</span>
                         <span className="address-details">{num}</span>
-                        <div className="address-btns">
-                            <img src="images/pencil.svg" alt="Edit Button" title="edit" />
-                            <img src="images/delete.svg" alt="Edit Button" title="edit" />
+                        <div className="edit-remove-btns">
+                            <img src="images/pencil.svg" alt="Edit Button" title="Edit" />
+                            <img src="images/delete.svg" alt="Remove Button" title="Remove" />
                         </div>
                     </label>
                 </li>
+            );
+        });
+    };
+
+    const renderCreditCards = () => {
+        return creditCards.map(({ vendorImg, lastNums, owner }) => {
+            return (
+                <section className="credit-card flex flex-column" key={lastNums}>
+                    <img src={vendorImg} className="self-start" alt="Credit Card" />
+                    <span className="card-num-label">Card Number</span>
+                    <span className="card-num flex space-between">
+                        <span>****</span>
+                        <span>****</span>
+                        <span>****</span>
+                        <span>{lastNums}</span>
+                    </span>
+                    <span className="owner">{owner}</span>
+                    <div className="edit-remove-btns">
+                        <img src="images/delete.svg" alt="Remove Button" title="Remove" />
+                    </div>
+                </section>
             );
         });
     };
@@ -166,14 +193,36 @@ export default function Checkout() {
                         <div className="cards-header flex align-center">
                             <span className="step">3</span>
                             <span className="title">Contact Number</span>
-                            <button className="add-address-btn">
+                            <button className="add-contact-btn">
                                 <span className="plus">+</span>
                                 <span className="txt">Add Contact</span>
                             </button>
                         </div>
                         <ul className="address-list">{renderContactNum()}</ul>
                     </section>
-                    <section className="payment-option cards-container"></section>
+                    <section className="payment-option cards-container flex flex-column align-center justify-content">
+                        <div className="cards-header flex flex-column">
+                            <div className="flex align-center justify-start">
+                                <span className="step">4</span>
+                                <span className="title">Payment Option</span>
+                            </div>
+                            <div className="flex align-center space-between">
+                                <span className="cards-label">Saved Cards</span>
+                                <button className="add-card-btn">
+                                    <span className="plus">+</span>
+                                    <span className="txt">Add Card</span>
+                                </button>
+                            </div>
+                        </div>
+                        <section className="credit-cards-container">
+                            <Slider items={renderCreditCards()} />
+                        </section>
+                        <span className="voucher self-start">Do you have a voucher?</span>
+                        <small className="terms self-start">
+                            By making this purchase you agree to our <span>terms and conditions</span>
+                        </small>
+                        <button className="proceed-btn">Proceed to Checkout</button>
+                    </section>
                 </section>
             </Layout>
         </div>

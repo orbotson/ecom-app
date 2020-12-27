@@ -22,7 +22,6 @@
                 .details,
                 .price {
                     color: #77798c;
-                    color: #77798c;
                 }
                 .mult {
                     margin: 0 12px;
@@ -76,13 +75,16 @@
             margin-block-end: 20px;
             padding: 20px;
             box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 16px 0px;
-
             .address-list {
-                // .address-card {
                 .sub-card {
                     position: relative;
-                    // padding: 15px;
                     margin-block-end: 15px;
+                    &:hover {
+                        .edit-remove-btns {
+                            opacity: 1;
+                            visibility: visible;
+                        }
+                    }
                     input {
                         position: absolute;
                         visibility: hidden;
@@ -108,26 +110,72 @@
                             color: #424561;
                             font-size: rem(15px);
                         }
-                        .address-btns {
-                            position: absolute;
-                            top: 10px;
-                            right: 10px;
-                            opacity: 0;
-                            visibility: hidden;
-                            transition: all 0.2s ease-in-out 0s;
-                            img {
-                                width: 20px;
-                            }
-                        }
                     }
                 }
             }
         }
-        .delivery-schdule {
-        }
-        .contact-number {
-        }
         .payment-option {
+            .cards-header {
+                width: 100%;
+                > :first-child {
+                    margin-block-end: 35px;
+                }
+                > :last-child {
+                    font-size: 13px;
+                    color: $main-clr;
+                    font-weight: bold;
+                }
+            }
+            .credit-cards-container {
+                margin-block-end: 50px;
+                width: 100%;
+                .credit-card {
+                    background-color: #e4f4fc;
+                    border-radius: 6px;
+                    border: 1px solid #e4f4fc;
+                    padding: 15px 20px;
+                    margin: 0 5px;
+                    img {
+                        margin-block-end: 17px;
+                    }
+                    .card-num-label {
+                        font-size: rem(10px);
+                        color: #77798c;
+                        margin-block-end: 11px;
+                    }
+                    .card-num {
+                        font-size: rem(14px);
+                        font-weight: bold;
+                        margin-block-end: 9px;
+                    }
+                    .owner {
+                        font-size: rem(12px);
+                        font-weight: bold;
+                    }
+                }
+            }
+            .voucher {
+                font-size: rem(15px);
+                color: $main-clr;
+                margin-block-end: 30px;
+            }
+            .terms {
+                font-size: rem(13px);
+                color: #77798c;
+                line-height: 1.5;
+                margin-block-end: 20px;
+                span {
+                    color: #ff5b60;
+                    cursor: pointer;
+                }
+            }
+            .proceed-btn {
+                @include for-button;
+                height: 48px;
+                padding: 0 30px;
+                flex-shrink: 0;
+                width: 100%;
+            }
         }
     }
     .cards-header {
@@ -146,7 +194,9 @@
             height: 30px;
             width: 30px;
         }
-        .add-address-btn {
+        .add-address-btn,
+        .add-contact-btn,
+        .add-card-btn {
             font-weight: bold;
             color: $main-clr;
             border: none;
@@ -159,6 +209,28 @@
             .txt {
                 font-size: rem(13px);
             }
+        }
+    }
+    .sub-card,
+    .credit-card {
+        &:hover {
+            .edit-remove-btns {
+                cursor: pointer;
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+    .edit-remove-btns {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.2s ease-in-out 0s;
+        img {
+            width: 20px;
+            margin-inline-start: 5px;
         }
     }
 }
