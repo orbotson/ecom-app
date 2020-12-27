@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { IoCloseOutline } from 'react-icons/io5';
+import DarkScreen from '../DarkScreen/DarkScreen';
 
 export default function CategoryFilter() {
     const [category, setCategory] = useState('No Category Selected');
@@ -25,6 +26,8 @@ export default function CategoryFilter() {
         setIsFilterClicked(true);
         setModalStyle({
             transform: 'translateY(0%) translateY(0px) translateX(-50%)',
+            opacity: 1,
+            visibility: 'visible',
         });
     };
 
@@ -33,6 +36,8 @@ export default function CategoryFilter() {
         setIsFilterClicked(false);
         setModalStyle({
             transform: 'translateY(100%) translateY(100px) translateX(-50%)',
+            opacity: 0,
+            visibility: 'hidden',
         });
     };
 
@@ -49,29 +54,28 @@ export default function CategoryFilter() {
             <button className="filter-btn" onClick={onFilterBtnClick}>
                 Filter
             </button>
-            {isFilterClicked && (
-                <section className="categories-modal flex flex-column" style={modalStyle} onClick={onCloseModal}>
-                    <button className="close-modal-btn self-center">
-                        <IoCloseOutline />
-                    </button>
-                    <section className="category-cards grid">
-                        {categories.map(({ icon, label }) => {
-                            return (
-                                <section
-                                    key={label}
-                                    className="category-card flex flex-column align-center justify-center"
-                                    onClick={e => onCardClick(e, label)}
-                                >
-                                    <span className="category-icon flex align-center justify-center">
-                                        <Image src={icon} alt="Category Icon" width={40} height={40} />
-                                    </span>
-                                    <span className="category-label">{label}</span>
-                                </section>
-                            );
-                        })}
-                    </section>
+            <section className="categories-modal flex flex-column" style={modalStyle} onClick={onCloseModal}>
+                <button className="close-modal-btn flex self-center align-center justify-center">
+                    <IoCloseOutline />
+                </button>
+                <section className="category-cards grid">
+                    {categories.map(({ icon, label }) => {
+                        return (
+                            <section
+                                key={label}
+                                className="category-card flex flex-column align-center justify-center"
+                                onClick={e => onCardClick(e, label)}
+                            >
+                                <span className="category-icon flex align-center justify-center">
+                                    <Image src={icon} alt="Category Icon" width={40} height={40} />
+                                </span>
+                                <span className="category-label">{label}</span>
+                            </section>
+                        );
+                    })}
                 </section>
-            )}
+            </section>
+            {isFilterClicked && <DarkScreen toggleMenu={onFilterBtnClick} />}
         </div>
     );
 }

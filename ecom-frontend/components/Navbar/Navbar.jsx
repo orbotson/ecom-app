@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import MobileMenu from '../MobileMenu/MobileMenu';
+import DarkScreen from '../DarkScreen/DarkScreen';
 
 export default function Navbar() {
     const [lang, setLang] = useState('English');
@@ -68,7 +69,8 @@ export default function Navbar() {
             </div>
             <Dropdown className="lang-switcher" options={optionsWithIcons} onChange={onSelect} value={lang} />
             <MobileMenu isOpen={isMenuOpen} onClose={handleMenuToggle} />
-            {isMenuOpen && <div className="screen" onClick={() => handleMenuToggle(false)}></div>}
+            {/* {isMenuOpen && <div className="screen" onClick={() => handleMenuToggle(false)}></div>} */}
+            {isMenuOpen && <DarkScreen toggleMenu={handleMenuToggle} />}
         </nav>
     );
 }
