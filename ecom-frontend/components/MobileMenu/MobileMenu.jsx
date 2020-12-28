@@ -14,13 +14,13 @@ export default function MobileMenu({ isOpen, onClose }) {
             </section>
             <section className="links flex flex-column">
                 <Link href="/">
-                    <a>Grocery</a>
+                    <a onClick={() => onClose(false)}>Grocery</a>
                 </Link>
                 <Link href="/checkout">
-                    <a>Checkout</a>
+                    <a onClick={() => onClose(false)}>Checkout</a>
                 </Link>
                 <Link href="/help">
-                    <a>Need Help</a>
+                    <a onClick={() => onClose(false)}>Need Help</a>
                 </Link>
             </section>
         </div>

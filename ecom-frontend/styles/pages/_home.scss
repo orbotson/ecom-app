@@ -1,5 +1,7 @@
 .home {
+    position: relative;
     padding-block-end: 100px;
+    padding: 136px 0 100px 0;
     .cards-container {
         width: 100%;
         gap: 10px;
@@ -61,5 +63,9 @@
             margin-inline-start: auto;
             margin-inline-end: 0;
         }
+    }
+    .cart-modal-wrapper {
+        background-color: transparent;
+        background-color: red;
     }
 }

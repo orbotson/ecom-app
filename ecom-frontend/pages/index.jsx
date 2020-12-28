@@ -1,13 +1,15 @@
 import { useEffect, useState, useContext } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
+import { ProductContext } from '../store/contexts/ProductContext';
+import { utilService } from '../services/util.service';
 import CategoryFilter from '../components/CategoryFilter/CategoryFilter';
 import Layout from '../components/Layout/Layout';
 import Slider from '../components/Slider/Slider';
 import Card from '../components/Card/Card';
 import CartModal from '../components/CartModal/CartModal';
-import { ProductContext } from '../store/contexts/ProductContext';
-import { utilService } from '../services/util.service';
-import Image from 'next/image';
+import DarkScreen from '../components/DarkScreen/DarkScreen';
+import CategoryModal from '../components/CategoryModal/CategoryModal';
 
 export default function Grocery({ products }) {
     const { shoppingCart, updateShoppingCart } = useContext(ProductContext);
@@ -15,6 +17,13 @@ export default function Grocery({ products }) {
     const [productsToShow, setProductsToShow] = useState(productsCopy.slice(0, 5));
     const [next, setNext] = useState(5);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [isCartClicked, setIsCartClicked] = useState(false);
+    const [isFilterClicked, setIsFilterClicked] = useState(false);
+    const [category, setCategory] = useState('No Category Selected');
+    const [modalStyle, setModalStyle] = useState({
+        opacity: 0,
+        visibility: 'hidden',
+    });
 
     const productsPerPage = 5;
 
@@ -37,7 +46,6 @@ export default function Grocery({ products }) {
 
     const updateCart = (product, action) => {
         const updatedCart = [...shoppingCart];
-
         const productIdx = shoppingCart.findIndex(({ _id }) => _id === product._id);
         if (action === 'increase') {
             productIdx === -1 ? updatedCart.push({ ...product, amount: 1 }) : updatedCart[productIdx].amount++;
@@ -47,7 +55,6 @@ export default function Grocery({ products }) {
         } else {
             updatedCart.splice(productIdx, 1);
         }
-
         updateShoppingCart(updatedCart);
     };
 
@@ -61,13 +68,33 @@ export default function Grocery({ products }) {
         setNext(next + productsPerPage);
     };
 
+    const onCartBtnClick = () => {
+        document.body.style.overflowY = 'hidden';
+        setIsCartClicked(true);
+        setModalStyle({
+            opacity: 1,
+            visibility: 'visible',
+        });
+    };
+
+    const onCloseModal = () => {
+        document.body.style.overflowY = 'auto';
+        setIsCartClicked(false);
+        setIsFilterClicked(false);
+        setModalStyle({
+            transform: 'translateY(100%) translateY(100px) translateX(-50%)',
+            opacity: 0,
+            visibility: 'hidden',
+        });
+    };
+
     return (
         <Layout>
             <Head>
                 <title>Grocery</title>
             </Head>
             <div className="home">
-                <CategoryFilter />
+                <CategoryFilter category={category} setIsFilterClicked={setIsFilterClicked} />
                 <Slider
                     items={[
                         <Image src="/images/grocery-banner-img-one.jpg" width={670} height={201} layout="responsive" />,
@@ -89,12 +116,21 @@ export default function Grocery({ products }) {
                         </button>
                     </section>
                 )}
-                <button className="cart-btn flex align-center">
+                <button className="cart-btn flex align-center" onClick={onCartBtnClick}>
                     <img className="icon" src="images/shopping-cart-white.svg" />
                     <span>{shoppingCart.length} Item</span>
                     <span className="price-box flex align-center justify-center">${totalPrice}</span>
                 </button>
-                {/* <CartModal cart={cart} totalPrice={getPriceDetails} updateCart={updateCart} /> */}
+                <section className="cart-modal-wrapper" style={modalStyle}>
+                    <CartModal cart={shoppingCart} updateCart={updateCart} closeModal={onCloseModal} />
+                </section>
+                <CategoryModal
+                    setCategory={setCategory}
+                    isOpen={isFilterClicked}
+                    setIsOpen={setIsFilterClicked}
+                    closeModal={onCloseModal}
+                />
+                {(isCartClicked || isFilterClicked) && <DarkScreen toggleMenu={onCloseModal} />}
             </div>
         </Layout>
     );

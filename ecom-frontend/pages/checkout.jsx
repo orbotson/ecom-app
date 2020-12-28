@@ -4,10 +4,13 @@ import Layout from '../components/Layout/Layout';
 import { ProductContext } from '../store/contexts/ProductContext';
 import { utilService } from '../services/util.service';
 import Slider from '../components/Slider/Slider';
+import MultiModal from '../components/MultiModal/MultiModal';
+import DarkScreen from '../components/DarkScreen/DarkScreen';
 
 export default function Checkout() {
     const { shoppingCart } = useContext(ProductContext);
     const [prices, setPrices] = useState({});
+    const [modalToDisplay, setModalToDisplay] = useState('');
     const addresses = [
         {
             label: 'Home',
@@ -142,6 +145,21 @@ export default function Checkout() {
         });
     };
 
+    const onAddClick = section => {
+        setModalToDisplay(section);
+    };
+
+    const onCloseModal = () => {
+        document.body.style.overflowY = 'auto';
+        setIsCartClicked(false);
+        setIsFilterClicked(false);
+        setModalStyle({
+            transform: 'translateY(100%) translateY(100px) translateX(-50%)',
+            opacity: 0,
+            visibility: 'hidden',
+        });
+    };
+
     return (
         <div className="checkout">
             <Layout>
@@ -175,7 +193,7 @@ export default function Checkout() {
                         <div className="cards-header flex align-center">
                             <span className="step">1</span>
                             <span className="title">Delivery Address</span>
-                            <button className="add-address-btn">
+                            <button className="add-address-btn" onClick={() => onAddClick('address')}>
                                 <span className="plus">+</span>
                                 <span className="txt">Add Address</span>
                             </button>
@@ -193,7 +211,7 @@ export default function Checkout() {
                         <div className="cards-header flex align-center">
                             <span className="step">3</span>
                             <span className="title">Contact Number</span>
-                            <button className="add-contact-btn">
+                            <button className="add-contact-btn" onClick={() => onAddClick('contact')}>
                                 <span className="plus">+</span>
                                 <span className="txt">Add Contact</span>
                             </button>
@@ -208,7 +226,7 @@ export default function Checkout() {
                             </div>
                             <div className="flex align-center space-between">
                                 <span className="cards-label">Saved Cards</span>
-                                <button className="add-card-btn">
+                                <button className="add-card-btn" onClick={() => onAddClick('payment')}>
                                     <span className="plus">+</span>
                                     <span className="txt">Add Card</span>
                                 </button>
@@ -224,6 +242,8 @@ export default function Checkout() {
                         <button className="proceed-btn">Proceed to Checkout</button>
                     </section>
                 </section>
+                <MultiModal modalToShow={modalToDisplay} />
+                {/* <DarkScreen /> */}
             </Layout>
         </div>
     );

@@ -5,10 +5,9 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 9999;
+    z-index: 99999;
     background-color: transparent;
-    // transform: scale3d(1, 1, 1);
-    // transform-origin: center bottom;
+    transition: 0.3s ease-in-out 0s;
     .close-modal-btn {
         border-radius: 25px;
         border: none;
@@ -16,6 +15,7 @@
         width: 40px;
         height: 40px;
         font-size: 1.3rem;
+        margin: 0 auto 10px;
     }
     .modal-content {
         background-color: #fff;

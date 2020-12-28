@@ -2,16 +2,9 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import MobileMenu from '../MobileMenu/MobileMenu';
-import DarkScreen from '../DarkScreen/DarkScreen';
 
-export default function Navbar() {
+export default function Navbar({ handleMenuClick }) {
     const [lang, setLang] = useState('English');
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-    const handleMenuToggle = isOpen => {
-        setIsMenuOpen(isOpen);
-    };
 
     const langOptions = [
         { lang: 'Arabic', flagUrl: '/images/sa.svg' },
@@ -58,7 +51,7 @@ export default function Navbar() {
     return (
         <nav className="navbar flex space-between align-center">
             <div className="wrapper flex align-center">
-                <button className="mobile-menu-btn" onClick={() => handleMenuToggle(true)}>
+                <button className="mobile-menu-btn" onClick={() => handleMenuClick(true)}>
                     <span></span>
                     <span></span>
                     <span></span>
@@ -68,9 +61,6 @@ export default function Navbar() {
                 </div>
             </div>
             <Dropdown className="lang-switcher" options={optionsWithIcons} onChange={onSelect} value={lang} />
-            <MobileMenu isOpen={isMenuOpen} onClose={handleMenuToggle} />
-            {/* {isMenuOpen && <div className="screen" onClick={() => handleMenuToggle(false)}></div>} */}
-            {isMenuOpen && <DarkScreen toggleMenu={handleMenuToggle} />}
         </nav>
     );
 }
