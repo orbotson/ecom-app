@@ -75,7 +75,9 @@
             margin-block-end: 20px;
             padding: 20px;
             box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 16px 0px;
-            .address-list {
+            .address-list,
+            .delivery-list,
+            .contact-list {
                 .sub-card {
                     position: relative;
                     margin-block-end: 15px;
@@ -99,14 +101,14 @@
                         background-color: #f7f7f7;
                         border-radius: 6px;
                         flex: 1 1 100%;
-                        .address-title {
+                        .title {
                             font-size: rem(13px);
                             font-weight: bold;
                             margin-block-end: 5px;
                             text-transform: capitalize;
                             line-height: 1.2;
                         }
-                        .address-details {
+                        .details {
                             color: #424561;
                             font-size: rem(15px);
                         }
@@ -158,6 +160,7 @@
                 font-size: rem(15px);
                 color: $main-clr;
                 margin-block-end: 30px;
+                cursor: pointer;
             }
             .terms {
                 font-size: rem(13px);
@@ -177,6 +180,22 @@
                 width: 100%;
             }
         }
+    }
+    .close-btn {
+        position: fixed;
+        top: 2%;
+        right: 3%;
+        z-index: 99999;
+        border-radius: 25px;
+        border: none;
+        background-color: #fff;
+        color: #222222;
+        width: 30px;
+        height: 30px;
+        font-family: LatoBold, sans-serif;
+        font-size: 0.9rem;
+        margin: 0 auto 10px;
+        cursor: pointer;
     }
     .cards-header {
         line-height: 1.2;

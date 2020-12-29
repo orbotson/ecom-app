@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import Head from 'next/head';
 import Layout from '../components/Layout/Layout';
 import { ProductContext } from '../store/contexts/ProductContext';
+import { UserContext } from '../store/contexts/UserContext';
 import { utilService } from '../services/util.service';
 import Slider from '../components/Slider/Slider';
 import MultiModal from '../components/MultiModal/MultiModal';
@@ -9,15 +10,12 @@ import DarkScreen from '../components/DarkScreen/DarkScreen';
 
 export default function Checkout() {
     const { shoppingCart } = useContext(ProductContext);
+    const { loggedInUser } = useContext(UserContext);
     const [prices, setPrices] = useState({});
     const [modalToDisplay, setModalToDisplay] = useState('');
-    const addresses = [
-        {
-            label: 'Home',
-            details: '27 Street, 2569 Heritage Road Visalia, CA 93291',
-        },
-        { label: 'Office', details: '33 Baker Street, Crescent Road, CA 65746' },
-    ];
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editModalData, setEditModalData] = useState(null);
+
     const deliveryOptions = [
         {
             label: '8am-11am',
@@ -39,15 +37,6 @@ export default function Checkout() {
             label: 'Next Day',
             txt: 'Next Day',
         },
-    ];
-    const contactNums = [
-        { label: 'Primary', num: '202-555-0191' },
-        { label: 'Secondary', num: '202-555-0701' },
-    ];
-    const creditCards = [
-        { vendorImg: 'images/paypal.png', lastNums: '4580', owner: 'Jhon Doe Smith' },
-        { vendorImg: 'images/visa.png', lastNums: '8750', owner: 'Jane Doe Smith' },
-        { vendorImg: 'images/mastercard.png', lastNums: '3421', owner: 'Jhon Doe Smith' },
     ];
 
     useEffect(() => {
@@ -75,15 +64,20 @@ export default function Checkout() {
     };
 
     const renderUserAddresses = () => {
-        return addresses.map(({ label, details }, idx) => {
+        return loggedInUser.addresses.map(({ label, details }, idx) => {
             return (
                 <li className="sub-card" key={idx}>
                     <input type="radio" value={label} name="address" id={`address-${label}`} />
                     <label className="flex flex-column" htmlFor={`address-${label}`}>
-                        <span className="address-title">{label}</span>
-                        <span className="address-details">{details}</span>
+                        <span className="title">{label}</span>
+                        <span className="details">{details}</span>
                         <div className="edit-remove-btns">
-                            <img src="images/pencil.svg" alt="Edit Button" title="Edit" />
+                            <img
+                                src="images/pencil.svg"
+                                alt="Edit Button"
+                                title="Edit"
+                                onClick={() => onEditClick('address', { label, details })}
+                            />
                             <img src="images/delete.svg" alt="Remove Button" title="Remove" />
                         </div>
                     </label>
@@ -98,8 +92,8 @@ export default function Checkout() {
                 <li className="sub-card" key={idx}>
                     <input type="radio" value={label} name="delivery" id={`address-${label}`} />
                     <label className="flex flex-column" htmlFor={`address-${label}`}>
-                        <span className="address-title">{label}</span>
-                        <span className="address-details">{txt}</span>
+                        <span className="title">{label}</span>
+                        <span className="details">{txt}</span>
                     </label>
                 </li>
             );
@@ -107,15 +101,20 @@ export default function Checkout() {
     };
 
     const renderContactNum = () => {
-        return contactNums.map(({ label, num }, idx) => {
+        return loggedInUser.contactNums.map(({ label, num }, idx) => {
             return (
                 <li className="sub-card" key={idx}>
                     <input type="radio" value={label} name="contact" id={`address-${label}`} />
                     <label className="flex flex-column" htmlFor={`address-${label}`}>
-                        <span className="address-title">{label}</span>
-                        <span className="address-details">{num}</span>
+                        <span className="title">{label}</span>
+                        <span className="details">{num}</span>
                         <div className="edit-remove-btns">
-                            <img src="images/pencil.svg" alt="Edit Button" title="Edit" />
+                            <img
+                                src="images/pencil.svg"
+                                alt="Edit Button"
+                                title="Edit"
+                                onClick={() => onEditClick('contact', { label, num })}
+                            />
                             <img src="images/delete.svg" alt="Remove Button" title="Remove" />
                         </div>
                     </label>
@@ -125,7 +124,7 @@ export default function Checkout() {
     };
 
     const renderCreditCards = () => {
-        return creditCards.map(({ vendorImg, lastNums, owner }) => {
+        return loggedInUser.creditCards.map(({ vendorImg, lastNums, owner }) => {
             return (
                 <section className="credit-card flex flex-column" key={lastNums}>
                     <img src={vendorImg} className="self-start" alt="Credit Card" />
@@ -146,18 +145,22 @@ export default function Checkout() {
     };
 
     const onAddClick = section => {
+        document.body.style.overflowY = 'hidden';
         setModalToDisplay(section);
+        setIsModalOpen(true);
+    };
+
+    const onEditClick = (section, data) => {
+        setModalToDisplay(section);
+        setEditModalData(data);
+        document.body.style.overflowY = 'hidden';
+        setIsModalOpen(true);
     };
 
     const onCloseModal = () => {
+        setEditModalData(null);
         document.body.style.overflowY = 'auto';
-        setIsCartClicked(false);
-        setIsFilterClicked(false);
-        setModalStyle({
-            transform: 'translateY(100%) translateY(100px) translateX(-50%)',
-            opacity: 0,
-            visibility: 'hidden',
-        });
+        setIsModalOpen(false);
     };
 
     return (
@@ -205,7 +208,7 @@ export default function Checkout() {
                             <span className="step">2</span>
                             <span className="title">Delivery Schedule</span>
                         </div>
-                        <ul className="address-list">{renderDeliveryOptions()}</ul>
+                        <ul className="delivery-list">{renderDeliveryOptions()}</ul>
                     </section>
                     <section className="contact-number cards-container">
                         <div className="cards-header flex align-center">
@@ -216,7 +219,7 @@ export default function Checkout() {
                                 <span className="txt">Add Contact</span>
                             </button>
                         </div>
-                        <ul className="address-list">{renderContactNum()}</ul>
+                        <ul className="contact-list">{renderContactNum()}</ul>
                     </section>
                     <section className="payment-option cards-container flex flex-column align-center justify-content">
                         <div className="cards-header flex flex-column">
@@ -226,7 +229,7 @@ export default function Checkout() {
                             </div>
                             <div className="flex align-center space-between">
                                 <span className="cards-label">Saved Cards</span>
-                                <button className="add-card-btn" onClick={() => onAddClick('payment')}>
+                                <button className="add-card-btn" onClick={() => onAddClick('credit')}>
                                     <span className="plus">+</span>
                                     <span className="txt">Add Card</span>
                                 </button>
@@ -242,8 +245,13 @@ export default function Checkout() {
                         <button className="proceed-btn">Proceed to Checkout</button>
                     </section>
                 </section>
-                <MultiModal modalToShow={modalToDisplay} />
-                {/* <DarkScreen /> */}
+                <MultiModal modalToRender={modalToDisplay} isOpen={isModalOpen} dataToEdit={editModalData} />
+                {isModalOpen && (
+                    <span className="close-btn flex align-center justify-center" onClick={onCloseModal}>
+                        X
+                    </span>
+                )}
+                {isModalOpen && <DarkScreen toggleMenu={onCloseModal} />}
             </Layout>
         </div>
     );
