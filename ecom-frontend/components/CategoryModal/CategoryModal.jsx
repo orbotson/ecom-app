@@ -29,17 +29,30 @@ export default function CategoryModal({ setCategory, isOpen, closeModal }) {
     };
 
     useEffect(() => {
-        isOpen
-            ? setModalStyle({
-                  transform: 'translateY(0%) translateY(0px) translateX(-50%)',
-                  opacity: 1,
-                  visibility: 'visible',
-              })
-            : setModalStyle({
-                  transform: 'translateY(0%) translateY(0px) translateX(-50%)',
-                  opacity: 0,
-                  visibility: 'hidden',
-              });
+        const handleModalStyle = () => {
+            console.log(window.innerWidth);
+            if (window.innerWidth > 990) {
+                setModalStyle({
+                    transform: 'translate(0, 0)',
+                    // transform: 'translateY(0%) translateY(0px) translateX(-50%)',
+                    // opacity: 1,
+                    // visibility: 'visible',
+                });
+                return;
+            }
+            isOpen
+                ? setModalStyle({
+                      transform: 'translateY(0%) translateY(0px) translateX(-50%)',
+                      opacity: 1,
+                      visibility: 'visible',
+                  })
+                : setModalStyle({
+                      transform: 'translateY(0%) translateY(0px) translateX(-50%)',
+                      opacity: 0,
+                      visibility: 'hidden',
+                  });
+        };
+        handleModalStyle();
     }, [isOpen]);
 
     return (

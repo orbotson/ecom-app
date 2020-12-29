@@ -2,70 +2,83 @@
     position: relative;
     padding-block-end: 100px;
     padding: 136px 0 100px 0;
-    .cards-container {
-        width: 100%;
-        gap: 10px;
-        grid-template-columns: repeat(2, minmax(180px, 1fr));
-        margin-block-end: 32px;
-    }
-    .load-btn-container {
-        width: 100%;
-        text-align: center;
-        .load-btn {
-            color: $main-clr;
-            background-color: #ffffff;
-            height: 38px;
-            padding: 0 15px;
-            font-size: rem(14px);
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 6px;
-            border: 1px solid #f1f1f1;
-            transition: all 0.3s ease 0s;
-            &:hover {
-                background-color: $main-clr;
-                border-color: $main-clr;
-                color: #ffffff;
+    main {
+        .cards-container {
+            width: 100%;
+            gap: 10px;
+            grid-template-columns: repeat(2, minmax(180px, 1fr));
+            margin-block-end: 32px;
+        }
+        .load-btn-container {
+            width: 100%;
+            text-align: center;
+            .load-btn {
+                color: $main-clr;
+                background-color: #ffffff;
+                height: 38px;
+                padding: 0 15px;
+                font-size: rem(14px);
+                font-weight: bold;
+                cursor: pointer;
+                border-radius: 6px;
+                border: 1px solid #f1f1f1;
+                transition: all 0.3s ease 0s;
+                &:hover {
+                    background-color: $main-clr;
+                    border-color: $main-clr;
+                    color: #ffffff;
+                }
             }
         }
-    }
-    .cart-btn {
-        position: fixed;
-        right: 30px;
-        bottom: 30px;
-        width: calc(100% - 60px);
-        height: 45px;
-        padding: 2px 2px 2px 30px;
-        background-color: $main-clr;
-        border-radius: 60px;
-        box-shadow: rgba(0, 0, 0, 0.16) 0px 21px 36px;
-        border: 0;
-        z-index: 99;
-        cursor: pointer;
-        outline: 0;
-        .icon {
-            width: 25px;
-        }
-        :nth-child(2) {
-            font-size: rem(12px);
-            font-weight: bold;
-            padding: 0 10px 0 5px;
-            color: #fff;
-        }
-        .price-box {
-            width: 90px;
-            height: 41px;
-            border-radius: 28px;
-            background-color: #fff;
-            font-size: rem(12px);
-            font-weight: bold;
-            color: $main-clr;
-            margin-inline-start: auto;
-            margin-inline-end: 0;
+        .cart-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            width: calc(100% - 60px);
+            height: 45px;
+            padding: 2px 2px 2px 30px;
+            background-color: $main-clr;
+            border-radius: 60px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 21px 36px;
+            border: 0;
+            z-index: 99;
+            cursor: pointer;
+            outline: 0;
+            .icon {
+                width: 25px;
+            }
+            :nth-child(2) {
+                font-size: rem(12px);
+                font-weight: bold;
+                padding: 0 10px 0 5px;
+                color: #fff;
+            }
+            .price-box {
+                width: 90px;
+                height: 41px;
+                border-radius: 28px;
+                background-color: #fff;
+                font-size: rem(12px);
+                font-weight: bold;
+                color: $main-clr;
+                margin-inline-start: auto;
+                margin-inline-end: 0;
+            }
         }
     }
     .cart-modal-wrapper {
         background-color: transparent;
-        background-color: red;
+    }
+
+    @media only screen and (min-width: 990px) {
+        padding: 110px 2rem 50px;
+        row-gap: 0px;
+        grid-template-columns: 300px minmax(0px, 1fr);
+        main {
+            width: 60%;
+        }
+        .cards-container {
+            width: 60%;
+        }
     }
 }
