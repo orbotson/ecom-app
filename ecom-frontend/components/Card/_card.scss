@@ -2,6 +2,7 @@
     border-radius: 6px;
     border: 1px solid #f3f3f3;
     transition: all 0.3s ease-in-out 0s;
+    background-color: #fff;
     cursor: pointer;
     &:hover {
         box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 4px;
@@ -9,7 +10,7 @@
     }
     .img-container {
         position: relative;
-        height: 180px;
+        min-height: 180px;
         .sale-label {
             position: absolute;
             top: 1rem;
@@ -104,4 +105,8 @@
             }
         }
     }
+
+    // @media only screen and (min-width: 580px) {
+    //     height: 250px;
+    // }
 }

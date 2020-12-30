@@ -9,6 +9,7 @@ const initialState = {
                 details: '27 Street, 2569 Heritage Road Visalia, CA 93291',
             },
             { label: 'Office', details: '33 Baker Street, Crescent Road, CA 65746' },
+            { label: 'Office', details: '33 Baker Street, Crescent Road, CA 65746' },
         ],
         contactNums: [
             { label: 'Primary', num: '202-555-0191' },

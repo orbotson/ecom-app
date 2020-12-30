@@ -1,21 +1,8 @@
 import Link from 'next/link';
-import { useState } from 'react';
 import { IoCloseOutline } from 'react-icons/io5';
 import { utilService } from '../../services/util.service.js';
 
-export default function CartModal({ cart, updateCart, closeModal }) {
-    // const [modalStyle, setModalStyle] = useState({ ...style });
-
-    // const onCloseModal = () => {
-    //     document.body.style.overflowY = 'auto';
-    //     // setIsCartClicked(false);
-    //     setModalStyle({
-    //         transform: 'translateY(100%) translateY(100px) translateX(-50%)',
-    //         opacity: 0,
-    //         visibility: 'hidden',
-    //     });
-    // };
-
+export default function CartModal({ cart, updateCart, closeModal, isOpen }) {
     const getFinalPrice = () => {
         const price = utilService.getPriceDetails(cart).finalPrice;
         return price.toFixed(2);
@@ -47,7 +34,7 @@ export default function CartModal({ cart, updateCart, closeModal }) {
     };
 
     return (
-        <div className="cart-modal flex flex-column">
+        <div className={`cart-modal flex flex-column ${isOpen && 'active-cart-modal'}`}>
             <button className="close-modal-btn flex justify-center align-center" onClick={closeModal}>
                 <IoCloseOutline />
             </button>
@@ -66,13 +53,15 @@ export default function CartModal({ cart, updateCart, closeModal }) {
                         </span>
                     )}
                 </main>
-                <span className="voucher">Do you have a voucher?</span>
-                <Link className="checkout-btn-container" href="/checkout">
-                    <button className="checkout-btn flex space-between" onClick={closeModal}>
-                        <span className="self-center">Checkout</span>
-                        <span className="total-price flex align-center">${getFinalPrice()}</span>
-                    </button>
-                </Link>
+                <div className="voucher-checkout-wrapper flex flex-column">
+                    <span className="voucher">Do you have a voucher?</span>
+                    <Link className="checkout-btn-container" href="/checkout">
+                        <button className="checkout-btn flex space-between" onClick={closeModal}>
+                            <span className="self-center">Checkout</span>
+                            <span className="total-price flex align-center">${getFinalPrice()}</span>
+                        </button>
+                    </Link>
+                </div>
             </div>
         </div>
     );

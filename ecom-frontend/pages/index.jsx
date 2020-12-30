@@ -20,10 +20,6 @@ export default function Grocery({ products }) {
     const [isCartClicked, setIsCartClicked] = useState(false);
     const [isFilterClicked, setIsFilterClicked] = useState(false);
     const [category, setCategory] = useState('No Category Selected');
-    const [modalStyle, setModalStyle] = useState({
-        opacity: 0,
-        visibility: 'hidden',
-    });
 
     const productsPerPage = 5;
 
@@ -31,8 +27,7 @@ export default function Grocery({ products }) {
         const getCartData = () => {
             const updatedProducts = productsCopy.map(product => {
                 const addedProduct = shoppingCart.find(cartProduct => product._id === cartProduct._id);
-                if (addedProduct) return addedProduct;
-                else return product;
+                return addedProduct || product;
             });
             setProductsCopy(updatedProducts);
             setProductsToShow(updatedProducts.slice(0, productsToShow.length));
@@ -71,21 +66,12 @@ export default function Grocery({ products }) {
     const onCartBtnClick = () => {
         document.body.style.overflowY = 'hidden';
         setIsCartClicked(true);
-        setModalStyle({
-            opacity: 1,
-            visibility: 'visible',
-        });
     };
 
     const onCloseModal = () => {
         document.body.style.overflowY = 'auto';
         setIsCartClicked(false);
         setIsFilterClicked(false);
-        setModalStyle({
-            transform: 'translateY(100%) translateY(100px) translateX(-50%)',
-            opacity: 0,
-            visibility: 'hidden',
-        });
     };
 
     return (
@@ -102,25 +88,23 @@ export default function Grocery({ products }) {
                     closeModal={onCloseModal}
                 />
                 {(isCartClicked || isFilterClicked) && <DarkScreen toggleMenu={onCloseModal} />}
-                <main className="content-wrapper flex flex-column">
-                    <div className="slider-wrapper">
-                        <Slider
-                            items={[
-                                <Image
-                                    src="/images/grocery-banner-img-one.jpg"
-                                    width={670}
-                                    height={201}
-                                    layout="responsive"
-                                />,
-                                <Image
-                                    src="/images/grocery-banner-img-two.jpg"
-                                    width={670}
-                                    height={201}
-                                    layout="responsive"
-                                />,
-                            ]}
-                        />
-                    </div>
+                <main className="content-wrapper">
+                    <Slider
+                        items={[
+                            <Image
+                                src="/images/grocery-banner-img-one.jpg"
+                                width={670}
+                                height={201}
+                                layout="responsive"
+                            />,
+                            <Image
+                                src="/images/grocery-banner-img-two.jpg"
+                                width={670}
+                                height={201}
+                                layout="responsive"
+                            />,
+                        ]}
+                    />
                     <section className="cards-container grid">
                         {productsCopy &&
                             productsToShow.map(product => (
@@ -137,13 +121,20 @@ export default function Grocery({ products }) {
                         </section>
                     )}
                     <button className="cart-btn flex align-center" onClick={onCartBtnClick}>
-                        <img className="icon" src="images/shopping-cart-white.svg" />
-                        <span>{shoppingCart.length} Item</span>
+                        <div className="wrapper flex align-center">
+                            <img className="icon" src="images/shopping-cart-white.svg" />
+                            <span>{shoppingCart.length} Item</span>
+                        </div>
                         <span className="price-box flex align-center justify-center">${totalPrice}</span>
                     </button>
                 </main>
-                <section className="cart-modal-wrapper" style={modalStyle}>
-                    <CartModal cart={shoppingCart} updateCart={updateCart} closeModal={onCloseModal} />
+                <section className="cart-modal-wrapper">
+                    <CartModal
+                        cart={shoppingCart}
+                        updateCart={updateCart}
+                        closeModal={onCloseModal}
+                        isOpen={isCartClicked}
+                    />
                 </section>
             </div>
         </Layout>

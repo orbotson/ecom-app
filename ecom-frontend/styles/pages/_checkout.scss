@@ -1,4 +1,5 @@
 .checkout {
+    background-color: #fff;
     .order-info {
         padding: 40px 15px 30px;
         header {
@@ -250,6 +251,80 @@
         img {
             width: 20px;
             margin-inline-start: 5px;
+        }
+    }
+
+    @media only screen and (min-width: 480px) {
+        .checkout-info {
+            padding: 20px;
+            .cards-container {
+                .address-list,
+                .delivery-list,
+                .contact-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    margin: 0;
+                    .sub-card {
+                        // flex: 1 1 calc(50% - 10px);
+                        max-width: calc(50% - 30px);
+                        margin: 15px;
+                        line-height: 1.5;
+                    }
+                }
+                .delivery-list {
+                    .sub-card {
+                        margin: 5px;
+                        line-height: 1.5;
+                        flex: 1 1 calc(33.3333% - 10px);
+                        max-width: calc(33.3333% - 10px);
+                    }
+                }
+                .contact-list {
+                    .sub-card {
+                        flex: 1 1 calc(50% - 30px);
+                        max-width: calc(50% - 10px);
+                        margin: 15px;
+                        line-height: 1.5;
+                    }
+                }
+            }
+        }
+    }
+
+    @media only screen and (min-width: 700px) {
+        .checkout-info {
+            .cards-container {
+                .address-list,
+                .contact-list {
+                    .sub-card {
+                        flex: 1 1 calc(33.3333% - 30px);
+                        max-width: calc(33.3333% - 30px);
+                        margin: 15px;
+                        line-height: 1.5;
+                    }
+                }
+                .delivery-list {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-evenly;
+                    .sub-card {
+                        line-height: 1.5;
+                        flex: 1 1 calc(33.3333% - 30px);
+                        max-width: calc(33.3333% - 30px);
+                        height: 133px;
+                    }
+                }
+                .contact-list {
+                    .sub-card {
+                        flex: 1 1 calc(50% - 30px);
+                        max-width: calc(50% - 10px);
+                        margin: 15px;
+                        line-height: 1.5;
+                    }
+                }
+            }
         }
     }
 }

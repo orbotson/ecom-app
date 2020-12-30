@@ -18,6 +18,10 @@ export default function Checkout() {
 
     const deliveryOptions = [
         {
+            label: 'Express-Dlivery',
+            txt: '90 min express delivery',
+        },
+        {
             label: '8am-11am',
             txt: '8.00 AM - 11.00 AM',
         },
@@ -89,7 +93,7 @@ export default function Checkout() {
     const renderDeliveryOptions = () => {
         return deliveryOptions.map(({ label, txt }, idx) => {
             return (
-                <li className="sub-card" key={idx}>
+                <li className="sub-card flex" key={idx}>
                     <input type="radio" value={label} name="delivery" id={`address-${label}`} />
                     <label className="flex flex-column" htmlFor={`address-${label}`}>
                         <span className="title">{label}</span>

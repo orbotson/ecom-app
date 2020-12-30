@@ -1,14 +1,7 @@
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { IoCloseOutline } from 'react-icons/io5';
 
 export default function CategoryModal({ setCategory, isOpen, closeModal }) {
-    const [modalStyle, setModalStyle] = useState({
-        transform: 'translateY(100%) translateY(100px) translateX(-50%)',
-        opacity: 0,
-        visibility: 'hidden',
-    });
-
     const categories = [
         { icon: '/images/apple.svg', label: 'Frutis & Vegetables' },
         { icon: '/images/meat.svg', label: 'Meat & Fish' },
@@ -28,35 +21,8 @@ export default function CategoryModal({ setCategory, isOpen, closeModal }) {
         closeModal();
     };
 
-    useEffect(() => {
-        const handleModalStyle = () => {
-            console.log(window.innerWidth);
-            if (window.innerWidth > 990) {
-                setModalStyle({
-                    transform: 'translate(0, 0)',
-                    // transform: 'translateY(0%) translateY(0px) translateX(-50%)',
-                    // opacity: 1,
-                    // visibility: 'visible',
-                });
-                return;
-            }
-            isOpen
-                ? setModalStyle({
-                      transform: 'translateY(0%) translateY(0px) translateX(-50%)',
-                      opacity: 1,
-                      visibility: 'visible',
-                  })
-                : setModalStyle({
-                      transform: 'translateY(0%) translateY(0px) translateX(-50%)',
-                      opacity: 0,
-                      visibility: 'hidden',
-                  });
-        };
-        handleModalStyle();
-    }, [isOpen]);
-
     return (
-        <div className="category-modal flex flex-column" style={modalStyle} onClick={closeModal}>
+        <div className={`category-modal flex flex-column ${isOpen && 'active-category-modal'}`} onClick={closeModal}>
             <button className="close-modal-btn flex self-center align-center justify-center">
                 <IoCloseOutline />
             </button>

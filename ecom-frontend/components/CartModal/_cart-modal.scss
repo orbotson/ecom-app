@@ -5,6 +5,8 @@
     position: fixed;
     bottom: 0;
     left: 0;
+    opacity: 0;
+    visibility: hidden;
     z-index: 99999;
     background-color: transparent;
     transition: 0.3s ease-in-out 0s;
@@ -100,44 +102,75 @@
                 }
             }
         }
-        .voucher {
-            margin: 20px auto;
-            font-weight: bold;
-            font-size: rem(15px);
-            color: $main-clr;
-            text-align: center;
-            cursor: pointer;
-            background-color: #fff;
-        }
-        .checkout-btn {
-            width: calc(100% - 60px);
-            margin: 0 auto;
-            height: 45px;
-            padding: 2px 2px 2px 30px;
-            background-color: $main-clr;
-            border-radius: 60px;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 21px 36px;
-            border: 0;
-            z-index: 999;
-            margin-block-end: 15px;
-            cursor: pointer;
-            outline: 0;
-            span {
-                font-size: rem(15px);
+        .voucher-checkout-wrapper {
+            .voucher {
+                margin: 20px auto;
                 font-weight: bold;
-                padding: 0 10px 0 5px;
-                color: #fff;
-            }
-            .total-price {
-                height: 41px;
-                margin: 0;
-                border-radius: 28px;
-                background-color: #fff;
                 font-size: rem(15px);
-                font-weight: bold;
                 color: $main-clr;
-                padding: 0 30px;
+                text-align: center;
+                cursor: pointer;
+                background-color: #fff;
+            }
+            .checkout-btn {
+                width: calc(100% - 60px);
+                margin: 0 auto;
+                height: 45px;
+                padding: 2px 2px 2px 30px;
+                background-color: $main-clr;
+                border-radius: 60px;
+                box-shadow: rgba(0, 0, 0, 0.16) 0px 21px 36px;
+                border: 0;
+                z-index: 999;
+                margin-block-end: 15px;
+                cursor: pointer;
+                outline: 0;
+                span {
+                    font-size: rem(15px);
+                    font-weight: bold;
+                    padding: 0 10px 0 5px;
+                    color: #fff;
+                }
+                .total-price {
+                    height: 41px;
+                    margin: 0;
+                    border-radius: 28px;
+                    background-color: #fff;
+                    font-size: rem(15px);
+                    font-weight: bold;
+                    color: $main-clr;
+                    padding: 0 30px;
+                }
             }
         }
     }
+    @media only screen and (min-width: 580px) {
+        width: 420px;
+        right: 0;
+        top: 0;
+        bottom: auto;
+        left: auto;
+        background-color: #fff;
+        min-height: 100vh;
+        .close-modal-btn {
+            position: absolute;
+            right: 10px;
+            top: 7px;
+        }
+        .modal-content {
+            min-height: 100vh;
+            justify-content: space-between;
+            header {
+                justify-content: flex-start;
+            }
+            .products-container {
+                width: 100%;
+            }
+        }
+    }
+}
+
+.active-cart-modal {
+    opacity: 1;
+    visibility: visible;
 }
