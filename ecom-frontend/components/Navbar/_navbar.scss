@@ -55,6 +55,9 @@
             width: fit-content;
             padding: 0px 15px;
             border: none;
+            &:hover {
+                box-shadow: none;
+            }
             .Dropdown-placeholder {
                 padding: 0px 15px;
                 .option-container {
@@ -183,6 +186,10 @@
                 }
             }
         }
+        .Dropdown-root.page-switcher,
+        .help-link-wrapper {
+            display: none !important;
+        }
     }
 
     @media only screen and (min-width: 990px) {
@@ -197,9 +204,12 @@
                 margin-inline-end: 35px;
             }
         }
+        .Dropdown-root.page-switcher,
+        .help-link-wrapper {
+            display: block !important;
+        }
         .page-switcher {
             margin-inline-end: 25px;
-            display: block;
             .Dropdown-control {
                 .Dropdown-placeholder {
                     padding: 10px;

@@ -43,6 +43,21 @@ export default function Checkout() {
         },
     ];
 
+    const sliderBreakpoints = {
+        464: {
+            width: 464,
+            slidesPerView: 1,
+        },
+        1024: {
+            width: 1024,
+            slidesPerView: 2,
+        },
+        4000: {
+            width: 4000,
+            slidesPerView: 3,
+        },
+    };
+
     useEffect(() => {
         setPrices(utilService.getPriceDetails(shoppingCart));
     }, []);
@@ -173,27 +188,29 @@ export default function Checkout() {
                 <Head>
                     <title>Checkout</title>
                 </Head>
-                <section className="order-info">
-                    <header>Your Order</header>
-                    <div className="products-list">{renderShoppingCart()}</div>
-                    <div className="price-calculation">
-                        <div className="sub-total">
-                            <span className="txt">Sub Total</span>
-                            <span className="sub-price">${prices.subPrice}</span>
+                <section className="order-info-container">
+                    <section className="order-info">
+                        <header>Your Order</header>
+                        <div className="products-list">{renderShoppingCart()}</div>
+                        <div className="price-calculation">
+                            <div className="sub-total">
+                                <span className="txt">Sub Total</span>
+                                <span className="sub-price">${prices.subPrice}</span>
+                            </div>
+                            <div className="delivery-fee">
+                                <span className="txt">Delivery Fee</span>
+                                <span className="sub-price">${prices.delivery}</span>
+                            </div>
+                            <div className="discount">
+                                <span className="txt">Discount</span>
+                                <span className="sub-price">${prices.discount}</span>
+                            </div>
+                            <div className="total">
+                                <span className="txt">Total</span>
+                                <span className="sub-price">${prices.finalPrice}</span>
+                            </div>
                         </div>
-                        <div className="delivery-fee">
-                            <span className="txt">Delivery Fee</span>
-                            <span className="sub-price">${prices.delivery}</span>
-                        </div>
-                        <div className="discount">
-                            <span className="txt">Discount</span>
-                            <span className="sub-price">${prices.discount}</span>
-                        </div>
-                        <div className="total">
-                            <span className="txt">Total</span>
-                            <span className="sub-price">${prices.finalPrice}</span>
-                        </div>
-                    </div>
+                    </section>
                 </section>
                 <section className="checkout-info flex flex-column">
                     <section className="delivery-address cards-container">
@@ -240,7 +257,7 @@ export default function Checkout() {
                             </div>
                         </div>
                         <section className="credit-cards-container">
-                            <Slider items={renderCreditCards()} />
+                            <Slider items={renderCreditCards()} breakpoints={sliderBreakpoints} />
                         </section>
                         <span className="voucher self-start">Do you have a voucher?</span>
                         <small className="terms self-start">

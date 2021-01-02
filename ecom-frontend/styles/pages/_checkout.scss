@@ -76,6 +76,7 @@
             margin-block-end: 20px;
             padding: 20px;
             box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 16px 0px;
+            background-color: #fff;
             .address-list,
             .delivery-list,
             .contact-list {
@@ -132,6 +133,9 @@
             .credit-cards-container {
                 margin-block-end: 50px;
                 width: 100%;
+                .swiper-container {
+                    width: 100%;
+                }
                 .credit-card {
                     background-color: #e4f4fc;
                     border-radius: 6px;
@@ -267,7 +271,6 @@
                     justify-content: flex-start;
                     margin: 0;
                     .sub-card {
-                        // flex: 1 1 calc(50% - 10px);
                         max-width: calc(50% - 30px);
                         margin: 15px;
                         line-height: 1.5;
@@ -323,6 +326,55 @@
                         margin: 15px;
                         line-height: 1.5;
                     }
+                }
+            }
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        .layout div {
+            display: flex;
+            .order-info-container {
+                margin-block-start: 68px;
+                order: 2;
+                min-width: 260px;
+                .order-info {
+                    position: sticky;
+                    top: 10%;
+                    .products-list,
+                    .price-calculation {
+                        display: flex;
+                        flex-direction: column;
+                    }
+                }
+            }
+            .checkout-info {
+                margin-block-start: 68px;
+                .credit-cards-container {
+                    .swiper-container {
+                        width: 768px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media only screen and (min-width: 990px) {
+        background-color: #f7f7f7;
+        width: 970px;
+        margin: 0 auto;
+        .layout div {
+            .order-info-container,
+            .checkout-info {
+                margin-block-start: 90px;
+            }
+        }
+    }
+    @media only screen and (min-width: 1024px) {
+        .layout div {
+            .credit-cards-container {
+                .swiper-container {
+                    width: 1024px;
                 }
             }
         }
