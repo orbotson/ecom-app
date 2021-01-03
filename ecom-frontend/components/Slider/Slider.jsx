@@ -8,6 +8,7 @@ export default function Slider({ items, breakpoints }) {
         <Swiper
             className="slider"
             navigation
+            // slidesPerView="auto"
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
             breakpoints={breakpoints}

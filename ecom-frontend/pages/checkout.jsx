@@ -8,6 +8,9 @@ import Slider from '../components/Slider/Slider';
 import MultiModal from '../components/MultiModal/MultiModal';
 import DarkScreen from '../components/DarkScreen/DarkScreen';
 
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+
 export default function Checkout() {
     const { shoppingCart } = useContext(ProductContext);
     const { loggedInUser } = useContext(UserContext);
@@ -43,20 +46,37 @@ export default function Checkout() {
         },
     ];
 
-    const sliderBreakpoints = {
-        464: {
-            width: 464,
-            slidesPerView: 1,
+    const responsive = {
+        superLargeDesktop: {
+            // the naming can be any, depends on you.
+            breakpoint: { max: 4000, min: 3000 },
+            items: 5,
         },
-        1024: {
-            width: 1024,
-            slidesPerView: 2,
+        desktop: {
+            breakpoint: { max: 3000, min: 1024 },
+            items: 3,
         },
-        4000: {
-            width: 4000,
-            slidesPerView: 3,
+        tablet: {
+            breakpoint: { max: 1024, min: 464 },
+            items: 2,
+        },
+        mobile: {
+            breakpoint: { max: 464, min: 0 },
+            items: 1,
         },
     };
+
+    // const sliderBreakpoints = {
+    // slidesPerColumn: 1,
+    // 464: {
+    //     width: 464,
+    //     slidesPerColumn: 2,
+    // },
+    // 768: {
+    //     width: 768,
+    //     slidesPerColumn: 3,
+    // },
+    // };
 
     useEffect(() => {
         setPrices(utilService.getPriceDetails(shoppingCart));
@@ -257,7 +277,8 @@ export default function Checkout() {
                             </div>
                         </div>
                         <section className="credit-cards-container">
-                            <Slider items={renderCreditCards()} breakpoints={sliderBreakpoints} />
+                            {/* <Slider items={renderCreditCards()} breakpoints={sliderBreakpoints} /> */}
+                            <Carousel responsive={responsive}>{renderCreditCards()}</Carousel>
                         </section>
                         <span className="voucher self-start">Do you have a voucher?</span>
                         <small className="terms self-start">

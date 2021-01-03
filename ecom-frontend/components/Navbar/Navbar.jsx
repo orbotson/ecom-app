@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -95,7 +94,9 @@ export default function Navbar({ handleMenuClick }) {
                     <span></span>
                 </button>
                 <div className="logo-container">
-                    <img src="/images/pickbazar.svg" alt="Pickbazar logo" />
+                    <Link href="/">
+                        <img src="/images/pickbazar.svg" alt="Pickbazar logo" title="Homepage" />
+                    </Link>
                 </div>
             </div>
             <Dropdown className="page-switcher" options={pagesOptions} onChange={onSelect} value={page} />
@@ -105,7 +106,7 @@ export default function Navbar({ handleMenuClick }) {
                 </span>
                 <input type="text" placeholder="Search yout products from here" name="seachfiled" />
             </form>
-            <span className="offer">Offer</span> {/*Supposed to be a link*/}
+            <span className="offer">Offer</span> {/*Should be a link*/}
             <Link href="/help">
                 <div className="help-link-wrapper flex align-center justify-center">
                     <img src="/images/question.svg" alt="Help" />

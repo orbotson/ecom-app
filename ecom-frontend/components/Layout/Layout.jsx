@@ -16,7 +16,7 @@ export default function Layout({ children }) {
             <Navbar handleMenuClick={handleMenuToggle} />
             <MobileMenu isOpen={isMenuOpen} onClose={handleMenuToggle} />
             {isMenuOpen && <DarkScreen toggleMenu={handleMenuToggle} />}
-            <div>{children}</div>
+            <div className="children">{children}</div>
         </div>
     );
 }

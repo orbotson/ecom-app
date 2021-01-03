@@ -25,6 +25,7 @@ export default function Help() {
                 'If you want to open an account for personal use you can do it over the phone or online. Opening an account online should only take a few minutes.',
         },
     ];
+
     return (
         <Layout>
             <div className="help">
