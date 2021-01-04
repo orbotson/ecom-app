@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import useTranslation from 'next-translate/useTranslation';
 
 export default function Navbar({ handleMenuClick }) {
+    const router = useRouter();
     const [page, setPage] = useState('Grocery');
     const [lang, setLang] = useState('English');
 
@@ -24,12 +26,12 @@ export default function Navbar({ handleMenuClick }) {
     ];
 
     const langs = [
-        { lang: 'Arabic', flagUrl: '/images/sa.svg' },
-        { lang: 'Chinese', flagUrl: '/images/cn.svg' },
-        { lang: 'English', flagUrl: '/images/us.svg' },
-        { lang: 'German', flagUrl: '/images/de.svg' },
-        { lang: 'Hebrew', flagUrl: '/images/il.svg' },
-        { lang: 'Spanish', flagUrl: '/images/es.svg' },
+        { lang: 'English', flagUrl: '/images/us.svg', langLocale: 'en-US' },
+        { lang: 'Hebrew', flagUrl: '/images/il.svg', langLocale: 'he' },
+        // { lang: 'Arabic', flagUrl: '/images/sa.svg' },
+        // { lang: 'Chinese', flagUrl: '/images/cn.svg' },
+        // { lang: 'German', flagUrl: '/images/de.svg' },
+        // { lang: 'Spanish', flagUrl: '/images/es.svg' },
     ];
 
     useEffect(() => {
@@ -45,7 +47,7 @@ export default function Navbar({ handleMenuClick }) {
                 value: name.toLowerCase(),
             });
 
-            const { flagUrl, lang } = langs[2];
+            const { flagUrl, lang } = langs[0];
             setLang({
                 label: (
                     <div className="option-container flex align-center">
@@ -71,7 +73,16 @@ export default function Navbar({ handleMenuClick }) {
         };
     });
 
-    const langsOptions = langs.map(({ lang, flagUrl }) => {
+    const langsOptions = router.locales.map(locale => {
+        let lang = langs[0].lang;
+        let flagUrl = langs[0].flagUrl;
+        let langLocale = langs[0].langLocale;
+        if (locale === 'he') {
+            lang = langs[1].lang;
+            flagUrl = langs[1].flagUrl;
+            langLocale = langs[1].langLocale;
+        }
+
         return {
             label: (
                 <div className="option-container flex align-center">
@@ -79,14 +90,15 @@ export default function Navbar({ handleMenuClick }) {
                     <span>{lang}</span>
                 </div>
             ),
-            value: lang.toLowerCase(),
+            value: langLocale,
         };
     });
 
-    const onSelect = () => {
-        //i18n
-        console.log('selected');
+    const onLangChange = ({ value, label }) => {
+        router.push(`${window.location.origin}/${value}${router.route}`);
     };
+
+    const onPageChange = () => {};
 
     return (
         <nav className="navbar flex space-between align-center">
@@ -102,7 +114,7 @@ export default function Navbar({ handleMenuClick }) {
                     </Link>
                 </div>
             </div>
-            <Dropdown className="page-switcher" options={pagesOptions} onChange={onSelect} value={page} />
+            <Dropdown className="page-switcher" options={pagesOptions} onChange={onPageChange} value={page} />
             <form className="searchfield flex align-center grow-1">
                 <span className="flex align-center justify-center">
                     <img src="/images/search.svg" className="search-icon self-center" alt="Search" />
@@ -116,7 +128,7 @@ export default function Navbar({ handleMenuClick }) {
                     <a>{t('common:help')}</a>
                 </div>
             </Link>
-            <Dropdown className="lang-switcher" options={langsOptions} onChange={onSelect} value={lang} />
+            <Dropdown className="lang-switcher" options={langsOptions} onChange={onLangChange} value={lang} />
             <button className="join-btn">{t('common:join')}</button>
         </nav>
     );
