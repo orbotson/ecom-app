@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import useTranslation from 'next-translate/useTranslation';
+import { utilService } from '../../services/util.service.js';
 
-export default function Card({ product, updateCart }) {
+export default function Card({ product, updateCart, currLocale, prevLocale }) {
     const [productCount, setProductCount] = useState(0);
     const [isAddClicked, setIsAddClicked] = useState(false);
     let { t } = useTranslation();
+
+    useEffect(() => {
+        console.log('currLocale:', currLocale);
+        console.log('prevLocale:', prevLocale);
+    }, []);
 
     const handleDefBtnClick = () => {
         setIsAddClicked(true);
@@ -24,6 +30,15 @@ export default function Card({ product, updateCart }) {
 
     const getSalePercents = (sale, originalPrice) => {
         return Math.floor((1 - sale / originalPrice) * 100).toFixed(0) + '%';
+    };
+
+    const getProductLocalizedPrice = price => {
+        try {
+            const convertedPrice = utilService.convertPrice(price, prevLocale.currency, currLocale.currency);
+            return utilService.getLocalizedPrice(convertedPrice, currLocale.locale, currLocale.currency);
+        } catch (err) {
+            console.log('err:', err);
+        }
     };
 
     const addBtn = (
@@ -57,8 +72,10 @@ export default function Card({ product, updateCart }) {
             </section>
             <section className="product-info">
                 <div className="prices">
-                    <span className="price">${product.sale > 0 ? product.sale : product.price}</span>
-                    {product.sale > 0 && <span className="sale">${product.price}</span>}
+                    <span className="price">
+                        {getProductLocalizedPrice(product.sale > 0 ? product.sale : product.price)}
+                    </span>
+                    {product.sale > 0 && <span className="sale">{getProductLocalizedPrice(product.price)}</span>}
                 </div>
                 <p className="name">{product.name}</p>
                 {btnToDisplay}

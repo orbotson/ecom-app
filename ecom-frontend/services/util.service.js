@@ -1,10 +1,12 @@
-//SWR fetch wrapper
-// function fetcher(...args) {
-//     return fetch(...args).then(res => res.json());
-// }
+import fx from 'money';
 
-//discount is not working well
-const getPriceDetails = (cart, delivery = 0) => {
+export const utilService = {
+    getPriceDetails,
+    getLocalizedPrice,
+    convertPrice,
+};
+
+function getPriceDetails(cart, delivery = 0) {
     let priceMap = { subPrice: 0, finalPrice: 0, delivery, discount: 0 };
     if (cart.length === 0) return priceMap;
     for (let product of cart) {
@@ -17,8 +19,21 @@ const getPriceDetails = (cart, delivery = 0) => {
         priceMap[item] = priceMap[item].toFixed(2);
     }
     return priceMap;
-};
+}
 
-export const utilService = {
-    getPriceDetails,
-};
+function convertPrice(price, from, to) {
+    console.log('from:', from);
+    console.log('to:', to);
+    fx.base = 'USD';
+    fx.rates = {
+        ILS: 0.311583,
+        EUR: 0.745101,
+        GBP: 0.64771,
+        USD: 1,
+    };
+    return fx(price).from(from).to(to);
+}
+
+function getLocalizedPrice(num, locale, currency) {
+    return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(num);
+}

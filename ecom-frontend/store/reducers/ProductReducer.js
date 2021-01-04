@@ -5,6 +5,11 @@ export const ProductReducer = (state, action) => {
                 ...state,
                 shoppingCart: action.cartData,
             };
+        case 'CHANGE_LOCALE':
+            return {
+                ...state,
+                localeData: action.locale,
+            };
         default:
             return state;
     }

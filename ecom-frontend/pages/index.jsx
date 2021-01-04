@@ -13,7 +13,9 @@ import DarkScreen from '../components/DarkScreen/DarkScreen';
 import CategoryModal from '../components/CategoryModal/CategoryModal';
 
 export default function Grocery({ products }) {
-    const { shoppingCart, updateShoppingCart } = useContext(ProductContext);
+    const { shoppingCart, localeData, prevLocaleData, updateShoppingCart, changeLocaleData } = useContext(
+        ProductContext
+    );
     const [productsCopy, setProductsCopy] = useState([...products]);
     const [productsToShow, setProductsToShow] = useState(productsCopy.slice(0, 5));
     const [next, setNext] = useState(5);
@@ -111,7 +113,12 @@ export default function Grocery({ products }) {
                         {productsCopy &&
                             productsToShow.map(product => (
                                 <section key={product._id}>
-                                    <Card product={product} updateCart={updateCart} />
+                                    <Card
+                                        product={product}
+                                        updateCart={updateCart}
+                                        currLocale={localeData}
+                                        prevLocale={prevLocaleData}
+                                    />
                                 </section>
                             ))}
                     </section>
