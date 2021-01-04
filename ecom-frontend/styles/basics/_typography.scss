@@ -2,18 +2,23 @@
     font-family: Lato;
     src: url(/fonts/Lato/Lato-Regular.ttf);
 }
-
 @font-face {
     font-family: LatoBold;
     src: url(/fonts/Lato/Lato-Bold.ttf);
 }
-
 @font-face {
     font-family: Poppins;
     src: url(/fonts/Poppins/Poppins-Regular.ttf);
 }
-
 @font-face {
     font-family: PoppinsBold;
     src: url(/fonts/Poppins/Poppins-Bold.ttf);
+}
+@font-face {
+    font-family: OpenSansHebrew;
+    src: url(/fonts/OpenSansHebrew/opensanshebrew-regular-webfont.ttf);
+}
+@font-face {
+    font-family: OpenSansHebrewBold;
+    src: url(/fonts/OpenSansHebrew/opensanshebrew-bold-webfont.ttf);
 }

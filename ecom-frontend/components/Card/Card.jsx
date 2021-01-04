@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import useTranslation from 'next-translate/useTranslation';
 
 export default function Card({ product, updateCart }) {
     const [productCount, setProductCount] = useState(0);
     const [isAddClicked, setIsAddClicked] = useState(false);
+    let { t } = useTranslation();
 
     const handleDefBtnClick = () => {
         setIsAddClicked(true);
@@ -26,7 +28,7 @@ export default function Card({ product, updateCart }) {
 
     const addBtn = (
         <button className="add-btn flex align-center" onClick={handleDefBtnClick}>
-            <span className="btn-label">Add</span>
+            <span className="btn-label">{t('common:add')}</span>
             <span className="btn-icon flex align-center">+</span>
         </button>
     );

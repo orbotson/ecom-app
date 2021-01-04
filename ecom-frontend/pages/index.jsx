@@ -1,6 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import useTranslation from 'next-translate/useTranslation';
 import { ProductContext } from '../store/contexts/ProductContext';
 import { utilService } from '../services/util.service';
 import CategoryFilter from '../components/CategoryFilter/CategoryFilter';
@@ -20,6 +21,7 @@ export default function Grocery({ products }) {
     const [isCartClicked, setIsCartClicked] = useState(false);
     const [isFilterClicked, setIsFilterClicked] = useState(false);
     const [category, setCategory] = useState('No Category Selected');
+    let { t } = useTranslation();
 
     const productsPerPage = 5;
 
@@ -116,14 +118,16 @@ export default function Grocery({ products }) {
                     {productsCopy.length !== productsToShow.length && (
                         <section className="load-btn-container">
                             <button className="load-btn" onClick={handleLoadMoreClick}>
-                                Load More
+                                {t('common:load')}
                             </button>
                         </section>
                     )}
                     <button className="cart-btn flex align-center" onClick={onCartBtnClick}>
                         <div className="wrapper flex align-center">
                             <img className="icon" src="images/shopping-cart-white.svg" />
-                            <span>{shoppingCart.length} Item</span>
+                            <span>
+                                {shoppingCart.length} {t('common:items')}
+                            </span>
                         </div>
                         <span className="price-box flex align-center justify-center">${totalPrice}</span>
                     </button>
@@ -146,7 +150,7 @@ export async function getServerSideProps() {
     const products = await res.json();
     return {
         props: {
-            products,
+            products: products,
         },
     };
 }

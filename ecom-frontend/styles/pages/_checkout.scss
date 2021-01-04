@@ -61,8 +61,7 @@
             .total {
                 font-weight: bold;
                 color: black;
-                .txt::after {
-                    content: '(incl. VAT)';
+                .total-label .vat-txt {
                     font-size: rem(11px);
                     margin-inline-start: 5px;
                     font-weight: bold;

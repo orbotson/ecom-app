@@ -1,8 +1,11 @@
 import Link from 'next/link';
 import { IoCloseOutline } from 'react-icons/io5';
+import useTranslation from 'next-translate/useTranslation';
 import { utilService } from '../../services/util.service.js';
 
 export default function CartModal({ cart, updateCart, closeModal, isOpen }) {
+    let { t } = useTranslation();
+
     const getFinalPrice = () => {
         const price = utilService.getPriceDetails(cart).finalPrice;
         return price.toFixed(2);
@@ -41,7 +44,9 @@ export default function CartModal({ cart, updateCart, closeModal, isOpen }) {
             <div className="modal-content flex flex-column">
                 <header className="flex aling-center justify-center">
                     <img className="icon" src="images/shopping-cart-green.svg" />
-                    <span className="flex align-center">{cart.length} Item</span>
+                    <span className="flex align-center">
+                        {cart.length} {t('common:items')}
+                    </span>
                 </header>
                 <main className="products-container">
                     {cart.length > 0 ? (
@@ -49,15 +54,15 @@ export default function CartModal({ cart, updateCart, closeModal, isOpen }) {
                     ) : (
                         <span className="no-products flex flex-column align-center justify-center">
                             <img src="/images/error.svg" alt="Empty Cart" />
-                            <span className="msg">No products found</span>
+                            <span className="msg">{t('common:noProducts')}</span>
                         </span>
                     )}
                 </main>
                 <div className="voucher-checkout-wrapper flex flex-column">
-                    <span className="voucher">Do you have a voucher?</span>
+                    <span className="voucher">{t('common:voucher')}</span>
                     <Link className="checkout-btn-container" href="/checkout">
                         <button className="checkout-btn flex space-between" onClick={closeModal}>
-                            <span className="self-center">Checkout</span>
+                            <span className="self-center">{t('common:checkout')}</span>
                             <span className="total-price flex align-center">${getFinalPrice()}</span>
                         </button>
                     </Link>

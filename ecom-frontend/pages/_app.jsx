@@ -1,3 +1,4 @@
+import { useLayoutEffect } from 'react';
 import '../styles/globals.scss';
 import 'swiper/swiper.scss';
 import 'swiper/components/navigation/navigation.scss';

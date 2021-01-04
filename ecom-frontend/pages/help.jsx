@@ -7,7 +7,7 @@ export default function Help() {
         {
             question: 'How to contact with Customer Service?',
             answer:
-                'Our Customer Experience Team is available 7 days a week and we offer 2 ways to get in contact.Email and Chat . We try to reply quickly, so you need not to wait too long for a response!.',
+                'Our Customer Experience Team is available 7 days a week and we offer 2 ways to get in contact.Email and Chat . We try to reply quickly, so you need not to wait too long for a response!',
         },
         {
             question: 'App installation failed, how to update system information?',
@@ -32,10 +32,10 @@ export default function Help() {
                 <Head>
                     <title>F.A.Q</title>
                 </Head>
-                <header>F.A.Q</header>
+                <header>{t('help:header')}</header>
                 <main className="accordion-container">
-                    {faqs.map(({ question, answer }) => {
-                        return <AccordionItem key={question} question={question} answer={answer} />;
+                    {faqs.map(({ question, answer }, idx) => {
+                        return <AccordionItem key={question} t={t} idx={idx + 1} />;
                     })}
                 </main>
             </div>

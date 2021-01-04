@@ -1,15 +1,14 @@
 import { useContext, useState, useEffect } from 'react';
 import Head from 'next/head';
-import Layout from '../components/Layout/Layout';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import useTranslation from 'next-translate/useTranslation';
 import { ProductContext } from '../store/contexts/ProductContext';
 import { UserContext } from '../store/contexts/UserContext';
 import { utilService } from '../services/util.service';
-import Slider from '../components/Slider/Slider';
+import Layout from '../components/Layout/Layout';
 import MultiModal from '../components/MultiModal/MultiModal';
 import DarkScreen from '../components/DarkScreen/DarkScreen';
-
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
 
 export default function Checkout() {
     const { shoppingCart } = useContext(ProductContext);
@@ -18,6 +17,7 @@ export default function Checkout() {
     const [modalToDisplay, setModalToDisplay] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editModalData, setEditModalData] = useState(null);
+    let { t } = useTranslation();
 
     const deliveryOptions = [
         {
@@ -47,13 +47,8 @@ export default function Checkout() {
     ];
 
     const responsive = {
-        superLargeDesktop: {
-            // the naming can be any, depends on you.
-            breakpoint: { max: 4000, min: 3000 },
-            items: 5,
-        },
         desktop: {
-            breakpoint: { max: 3000, min: 1024 },
+            breakpoint: { max: 4000, min: 1024 },
             items: 3,
         },
         tablet: {
@@ -65,18 +60,6 @@ export default function Checkout() {
             items: 1,
         },
     };
-
-    // const sliderBreakpoints = {
-    // slidesPerColumn: 1,
-    // 464: {
-    //     width: 464,
-    //     slidesPerColumn: 2,
-    // },
-    // 768: {
-    //     width: 768,
-    //     slidesPerColumn: 3,
-    // },
-    // };
 
     useEffect(() => {
         setPrices(utilService.getPriceDetails(shoppingCart));
@@ -97,7 +80,7 @@ export default function Checkout() {
         ) : (
             <div className="no-products flex flex-column justify-center align-center">
                 <img src="images/error.svg" alt="No Products" />
-                <span>No products found</span>
+                <span>{t('checkout:noProducts')}</span>
             </div>
         );
     };
@@ -210,23 +193,26 @@ export default function Checkout() {
                 </Head>
                 <section className="order-info-container">
                     <section className="order-info">
-                        <header>Your Order</header>
+                        <header>{t('checkout:yourOrder')}</header>
                         <div className="products-list">{renderShoppingCart()}</div>
                         <div className="price-calculation">
                             <div className="sub-total">
-                                <span className="txt">Sub Total</span>
+                                <span className="txt">{t('checkout:subTotal')}</span>
                                 <span className="sub-price">${prices.subPrice}</span>
                             </div>
                             <div className="delivery-fee">
-                                <span className="txt">Delivery Fee</span>
+                                <span className="txt">{t('checkout:deliveryFee')}</span>
                                 <span className="sub-price">${prices.delivery}</span>
                             </div>
                             <div className="discount">
-                                <span className="txt">Discount</span>
+                                <span className="txt">{t('checkout:discount')}</span>
                                 <span className="sub-price">${prices.discount}</span>
                             </div>
                             <div className="total">
-                                <span className="txt">Total</span>
+                                <div className="total-label">
+                                    <span className="txt">{t('checkout:total')}</span>
+                                    <span className="vat-txt"> ({t('checkout:totalVat')})</span>
+                                </div>
                                 <span className="sub-price">${prices.finalPrice}</span>
                             </div>
                         </div>
@@ -236,10 +222,10 @@ export default function Checkout() {
                     <section className="delivery-address cards-container">
                         <div className="cards-header flex align-center">
                             <span className="step">1</span>
-                            <span className="title">Delivery Address</span>
+                            <span className="title">{t('checkout:deliveryAddress')}</span>
                             <button className="add-address-btn" onClick={() => onAddClick('address')}>
                                 <span className="plus">+</span>
-                                <span className="txt">Add Address</span>
+                                <span className="txt">{t('checkout:addAddress')}</span>
                             </button>
                         </div>
                         <ul className="address-list">{renderUserAddresses()}</ul>
@@ -247,17 +233,17 @@ export default function Checkout() {
                     <section className="delivery-schedule cards-container">
                         <div className="cards-header flex align-center">
                             <span className="step">2</span>
-                            <span className="title">Delivery Schedule</span>
+                            <span className="title">{t('checkout:deliverySchedule')}</span>
                         </div>
                         <ul className="delivery-list">{renderDeliveryOptions()}</ul>
                     </section>
                     <section className="contact-number cards-container">
                         <div className="cards-header flex align-center">
                             <span className="step">3</span>
-                            <span className="title">Contact Number</span>
+                            <span className="title">{t('checkout:contactNumber')}</span>
                             <button className="add-contact-btn" onClick={() => onAddClick('contact')}>
                                 <span className="plus">+</span>
-                                <span className="txt">Add Contact</span>
+                                <span className="txt">{t('checkout:addContact')}</span>
                             </button>
                         </div>
                         <ul className="contact-list">{renderContactNum()}</ul>
@@ -266,13 +252,13 @@ export default function Checkout() {
                         <div className="cards-header flex flex-column">
                             <div className="flex align-center justify-start">
                                 <span className="step">4</span>
-                                <span className="title">Payment Option</span>
+                                <span className="title">{t('checkout:paymentOption')}</span>
                             </div>
                             <div className="flex align-center space-between">
-                                <span className="cards-label">Saved Cards</span>
+                                <span className="cards-label">{t('checkout:savedCards')}</span>
                                 <button className="add-card-btn" onClick={() => onAddClick('credit')}>
                                     <span className="plus">+</span>
-                                    <span className="txt">Add Card</span>
+                                    <span className="txt">{t('checkout:addCard')}</span>
                                 </button>
                             </div>
                         </div>
@@ -280,11 +266,11 @@ export default function Checkout() {
                             {/* <Slider items={renderCreditCards()} breakpoints={sliderBreakpoints} /> */}
                             <Carousel responsive={responsive}>{renderCreditCards()}</Carousel>
                         </section>
-                        <span className="voucher self-start">Do you have a voucher?</span>
+                        <span className="voucher self-start">{t('checkout:voucher')}</span>
                         <small className="terms self-start">
-                            By making this purchase you agree to our <span>terms and conditions</span>
+                            {t('checkout:byAgree')} <span>{t('checkout:terms')}</span>
                         </small>
-                        <button className="proceed-btn">Proceed to Checkout</button>
+                        <button className="proceed-btn">{t('checkout:proceed')}</button>
                     </section>
                 </section>
                 <MultiModal modalToRender={modalToDisplay} isOpen={isModalOpen} dataToEdit={editModalData} />

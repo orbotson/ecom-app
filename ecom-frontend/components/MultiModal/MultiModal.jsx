@@ -1,25 +1,29 @@
+import useTranslation from 'next-translate/useTranslation';
+
 //Forms are not functioning at the moment
 export default function MultiModal({ modalToRender, isOpen, dataToEdit }) {
+    let { t } = useTranslation();
+
     const renderModal = () => {
         if (modalToRender === 'address') {
             return (
                 <section className="add-address-modal">
                     <form className="flex flex-column">
-                        <header>{dataToEdit ? 'Edit Address' : 'Add New Address'}</header>
+                        <header>{dataToEdit ? t('checkout:editAddress') : t('checkout:addNewAddress')}</header>
                         <input
                             type="text"
                             name="title"
-                            placeholder="Enter Title"
+                            placeholder={t('checkout:enterTitle')}
                             value={dataToEdit ? dataToEdit.label : ''}
                         />
                         <textarea
                             name="address"
                             id="address"
                             rows="10"
-                            placeholder="Enter Address"
+                            placeholder={t('checkout:enterAddress')}
                             value={dataToEdit ? dataToEdit.details : ''}
                         ></textarea>
-                        <button type="submit">Save Address</button>
+                        <button type="submit">{t('checkout:saveAddress')}</button>
                     </form>
                 </section>
             );
@@ -27,14 +31,14 @@ export default function MultiModal({ modalToRender, isOpen, dataToEdit }) {
             return (
                 <section className="add-contact-modal">
                     <form className="flex flex-column">
-                        <header>{dataToEdit ? 'Edit Contact' : 'Add New Contact'}</header>
+                        <header>{dataToEdit ? t('checkout:editContact') : t('checkout:addNewContact')}</header>
                         <input
                             type="text"
                             name="phone"
-                            placeholder="Enter a phone number"
+                            placeholder={t('checkout:enterPhone')}
                             value={dataToEdit ? dataToEdit.num : ''}
                         />
-                        <button type="submit">Save Contact</button>
+                        <button type="submit">{t('checkout:saveContact')}</button>
                     </form>
                 </section>
             );

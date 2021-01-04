@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
+import useTranslation from 'next-translate/useTranslation';
 
 export default function Navbar({ handleMenuClick }) {
     const [page, setPage] = useState('Grocery');
     const [lang, setLang] = useState('English');
+
+    let { t } = useTranslation();
 
     const pages = [
         { name: 'Grocery', url: '/images/pages-dropdown/groceries.svg' },
@@ -104,17 +107,17 @@ export default function Navbar({ handleMenuClick }) {
                 <span className="flex align-center justify-center">
                     <img src="/images/search.svg" className="search-icon self-center" alt="Search" />
                 </span>
-                <input type="text" placeholder="Search yout products from here" name="seachfiled" />
+                <input type="text" placeholder={t('common:searchPH')} name="seachfiled" />
             </form>
-            <span className="offer">Offer</span> {/*Should be a link*/}
+            <span className="offer">{t('common:offer')}</span> {/*Should be a link*/}
             <Link href="/help">
                 <div className="help-link-wrapper flex align-center justify-center">
                     <img src="/images/question.svg" alt="Help" />
-                    <a>Need Help</a>
+                    <a>{t('common:help')}</a>
                 </div>
             </Link>
             <Dropdown className="lang-switcher" options={langsOptions} onChange={onSelect} value={lang} />
-            <button className="join-btn">Join</button>
+            <button className="join-btn">{t('common:join')}</button>
         </nav>
     );
 }
