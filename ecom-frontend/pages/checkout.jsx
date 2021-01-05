@@ -5,7 +5,7 @@ import 'react-multi-carousel/lib/styles.css';
 import useTranslation from 'next-translate/useTranslation';
 import { ProductContext } from '../store/contexts/ProductContext';
 import { UserContext } from '../store/contexts/UserContext';
-import { utilService } from '../services/util.service';
+import { productService } from '../services/product.service';
 import Layout from '../components/Layout/Layout';
 import MultiModal from '../components/MultiModal/MultiModal';
 import DarkScreen from '../components/DarkScreen/DarkScreen';
@@ -62,7 +62,7 @@ export default function Checkout() {
     };
 
     useEffect(() => {
-        setPrices(utilService.getPriceDetails(shoppingCart));
+        setPrices(productService.getPriceDetails(shoppingCart));
     }, []);
 
     const renderShoppingCart = () => {

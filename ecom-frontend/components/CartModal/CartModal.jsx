@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import { IoCloseOutline } from 'react-icons/io5';
 import useTranslation from 'next-translate/useTranslation';
-import { utilService } from '../../services/util.service.js';
+import { productService } from '../../services/product.service.js';
 
-export default function CartModal({ cart, updateCart, closeModal, isOpen }) {
+export default function CartModal({ cart, closeModal, isOpen }) {
     let { t } = useTranslation();
 
     const getFinalPrice = () => {
-        const price = utilService.getPriceDetails(cart).finalPrice;
+        const price = productService.getPriceDetails(cart).finalPrice;
         return price.toFixed(2);
     };
 

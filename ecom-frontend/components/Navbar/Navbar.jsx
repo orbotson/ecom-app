@@ -1,15 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
 import useTranslation from 'next-translate/useTranslation';
+import { ProductContext } from '../../store/contexts/ProductContext';
+import 'react-dropdown/style.css';
 
 export default function Navbar({ handleMenuClick }) {
-    const router = useRouter();
-    const [page, setPage] = useState('Grocery');
-    const [lang, setLang] = useState('English');
+    const { currLocale, changeLocale } = useContext(ProductContext);
+    const [page, setPage] = useState('');
+    const [lang, setLang] = useState('');
 
+    const router = useRouter();
     let { t } = useTranslation();
 
     const pages = [
@@ -77,10 +79,12 @@ export default function Navbar({ handleMenuClick }) {
         let lang = langs[0].lang;
         let flagUrl = langs[0].flagUrl;
         let langLocale = langs[0].langLocale;
+        let currency = langs[0].currency;
         if (locale === 'he') {
             lang = langs[1].lang;
             flagUrl = langs[1].flagUrl;
             langLocale = langs[1].langLocale;
+            currency = langs[1].currency;
         }
 
         return {
@@ -95,6 +99,8 @@ export default function Navbar({ handleMenuClick }) {
     });
 
     const onLangChange = ({ value, label }) => {
+        console.log('value:', value);
+        changeLocale(value);
         router.push(`${window.location.origin}/${value}${router.route}`);
     };
 

@@ -3,9 +3,14 @@ import { ProductReducer } from '../reducers/ProductReducer';
 
 const initialState = {
     shoppingCart: [],
-    prevLocaleData: { locale: 'he', currency: 'ILS' },
-    localeData: { locale: 'en-US', currency: 'USD' },
+    prevLocale: {},
+    currLocale: { locale: 'en-US', currency: 'USD' },
 };
+
+const availableLocales = [
+    { locale: 'en-US', currency: 'USD', lang: 'English' },
+    { locale: 'he', currency: 'ILS', lang: 'Hebrew' },
+];
 
 //Actions
 const UPDATE_CART = 'UPDATE_CART';
@@ -20,18 +25,19 @@ export const ProductContextProvider = ({ children }) => {
         dispatch({ type: UPDATE_CART, cartData });
     }
 
-    function changeLocaleData(locale) {
-        dispatch({ type: CHANGE_LOCALE, locale });
+    function changeLocale(locale) {
+        const nextLocale = availableLocales.find(loc => loc.locale === locale);
+        dispatch({ type: CHANGE_LOCALE, nextLocale });
     }
 
     return (
         <ProductContext.Provider
             value={{
                 shoppingCart: state.shoppingCart,
-                prevLocaleData: state.prevLocaleData,
-                localeData: state.localeData,
+                prevLocale: state.prevLocale,
+                currLocale: state.currLocale,
                 updateShoppingCart,
-                changeLocaleData,
+                changeLocale,
             }}
         >
             {children}

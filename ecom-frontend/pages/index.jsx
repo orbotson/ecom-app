@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import useTranslation from 'next-translate/useTranslation';
 import { ProductContext } from '../store/contexts/ProductContext';
-import { utilService } from '../services/util.service';
+import { productService } from '../services/product.service';
 import CategoryFilter from '../components/CategoryFilter/CategoryFilter';
 import Layout from '../components/Layout/Layout';
 import Slider from '../components/Slider/Slider';
@@ -13,9 +13,7 @@ import DarkScreen from '../components/DarkScreen/DarkScreen';
 import CategoryModal from '../components/CategoryModal/CategoryModal';
 
 export default function Grocery({ products }) {
-    const { shoppingCart, localeData, prevLocaleData, updateShoppingCart, changeLocaleData } = useContext(
-        ProductContext
-    );
+    const { shoppingCart, currLocale, prevLocale, updateShoppingCart, changeLocale } = useContext(ProductContext);
     const [productsCopy, setProductsCopy] = useState([...products]);
     const [productsToShow, setProductsToShow] = useState(productsCopy.slice(0, 5));
     const [next, setNext] = useState(5);
@@ -40,7 +38,7 @@ export default function Grocery({ products }) {
     }, []);
 
     useEffect(() => {
-        setTotalPrice(utilService.getPriceDetails(shoppingCart).finalPrice);
+        setTotalPrice(productService.getPriceDetails(shoppingCart).finalPrice);
     }, [shoppingCart]);
 
     const updateCart = (product, action) => {
@@ -116,8 +114,8 @@ export default function Grocery({ products }) {
                                     <Card
                                         product={product}
                                         updateCart={updateCart}
-                                        currLocale={localeData}
-                                        prevLocale={prevLocaleData}
+                                        currLocale={currLocale}
+                                        prevLocale={prevLocale}
                                     />
                                 </section>
                             ))}

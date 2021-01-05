@@ -8,7 +8,8 @@ export const ProductReducer = (state, action) => {
         case 'CHANGE_LOCALE':
             return {
                 ...state,
-                localeData: action.locale,
+                prevLocale: state.currLocale,
+                currLocale: action.nextLocale,
             };
         default:
             return state;
