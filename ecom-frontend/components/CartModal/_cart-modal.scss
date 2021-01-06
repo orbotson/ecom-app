@@ -3,10 +3,11 @@
     height: auto;
     max-height: 671px;
     position: fixed;
+    right: 0;
     bottom: 0;
-    left: 0;
     opacity: 0;
     visibility: hidden;
+    transform: translateX(100%);
     z-index: 99999;
     background-color: transparent;
     transition: 0.2s ease-in-out 0s;
@@ -171,7 +172,25 @@
     }
 }
 
+[dir='rtl'] .cart-modal {
+    left: 0;
+    right: auto;
+    transform: translateX(-100%);
+    .close-modal-btn {
+        right: auto;
+        left: 10px;
+    }
+}
+
+[dir='rtl'] .active-cart-modal {
+    left: 0;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0%);
+}
+
 .active-cart-modal {
+    transform: translateX(0%);
     opacity: 1;
     visibility: visible;
 }

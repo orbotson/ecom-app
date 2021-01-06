@@ -6,7 +6,8 @@ import { ProductContext } from '../store/contexts/ProductContext';
 import { productService } from '../services/product.service';
 import CategoryFilter from '../components/CategoryFilter/CategoryFilter';
 import Layout from '../components/Layout/Layout';
-import Slider from '../components/Slider/Slider';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 import Card from '../components/Card/Card';
 import CartModal from '../components/CartModal/CartModal';
 import DarkScreen from '../components/DarkScreen/DarkScreen';
@@ -24,6 +25,13 @@ export default function Grocery({ products }) {
     let { t } = useTranslation();
 
     const productsPerPage = 5;
+
+    const breakpoints = {
+        desktop: {
+            breakpoint: { max: 8000, min: 0 },
+            items: 1,
+        },
+    };
 
     useEffect(() => {
         const getCartData = () => {
@@ -91,22 +99,10 @@ export default function Grocery({ products }) {
                 />
                 {(isCartClicked || isFilterClicked) && <DarkScreen toggleMenu={onCloseModal} />}
                 <main className="content-wrapper">
-                    <Slider
-                        items={[
-                            <Image
-                                src="/images/grocery-banner-img-one.jpg"
-                                width={670}
-                                height={201}
-                                layout="responsive"
-                            />,
-                            <Image
-                                src="/images/grocery-banner-img-two.jpg"
-                                width={670}
-                                height={201}
-                                layout="responsive"
-                            />,
-                        ]}
-                    />
+                    <Carousel responsive={breakpoints}>
+                        <Image src="/images/grocery-banner-img-one.jpg" width={670} height={201} layout="responsive" />
+                        <Image src="/images/grocery-banner-img-two.jpg" width={670} height={201} layout="responsive" />
+                    </Carousel>
                     <section className="cards-container grid">
                         {productsCopy &&
                             productsToShow.map(product => (

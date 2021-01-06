@@ -5,9 +5,11 @@
     background-color: #f9f9f9;
     .content-wrapper {
         width: 100%;
-        .slider {
+        .react-multi-carousel-list {
+            direction: ltr;
             margin-block-end: 30px;
         }
+
         .cards-container {
             width: 100%;
             gap: 10px;
@@ -92,6 +94,7 @@
                     padding: 15px 10px;
                     .icon {
                         width: 18px;
+                        margin: 0;
                     }
                     :nth-child(2) {
                         padding: 0 10px 0 5px;
@@ -135,6 +138,16 @@
             .cards-container {
                 grid-template-columns: repeat(4, minmax(180px, 1fr));
             }
+        }
+    }
+}
+
+[dir='rtl'] .home {
+    @media only screen and (min-width: 580px) {
+        .content-wrapper .cart-btn {
+            right: auto;
+            left: 0px;
+            border-radius: 0px 6px 6px 0px;
         }
     }
 }

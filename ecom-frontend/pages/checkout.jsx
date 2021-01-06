@@ -46,7 +46,7 @@ export default function Checkout() {
         },
     ];
 
-    const responsiveCarousel = {
+    const breakpoints = {
         desktop: {
             breakpoint: { max: 4000, min: 1024 },
             items: 3,
@@ -273,7 +273,7 @@ export default function Checkout() {
                             </div>
                         </div>
                         <section className="credit-cards-container">
-                            <Carousel responsive={responsiveCarousel}>{renderCreditCards()}</Carousel>
+                            <Carousel responsive={breakpoints}>{renderCreditCards()}</Carousel>
                         </section>
                         <span className="voucher self-start">{t('checkout:voucher')}</span>
                         <small className="terms self-start">
