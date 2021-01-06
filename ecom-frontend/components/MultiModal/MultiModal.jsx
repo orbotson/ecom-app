@@ -1,6 +1,5 @@
 import useTranslation from 'next-translate/useTranslation';
 
-//Forms are not functioning at the moment
 export default function MultiModal({ modalToRender, isOpen, dataToEdit }) {
     let { t } = useTranslation();
 
@@ -43,7 +42,7 @@ export default function MultiModal({ modalToRender, isOpen, dataToEdit }) {
                 </section>
             );
         } else if (modalToRender === 'credit') {
-            //stipe form
+            //stripe form
         }
     };
 

@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useTranslation from 'next-translate/useTranslation';
 import { productService } from '../../services/product.service.js';
 
 export default function Card({ product, updateCart, currLocale, prevLocale }) {
-    const [productPrice, setProductPrice] = useState(product.price);
-    const [productSale, setProductSale] = useState(product.sale);
     const [productCount, setProductCount] = useState(0);
     const [isAddClicked, setIsAddClicked] = useState(false);
     let { t } = useTranslation();
@@ -48,33 +46,6 @@ export default function Card({ product, updateCart, currLocale, prevLocale }) {
         </div>
     );
 
-    useEffect(() => {
-        const getProductLocalizedPrice = () => {
-            let convertedPrice, convertedSale, localizedSale;
-            if (currLocale.locale !== 'en-US') {
-                convertedPrice = productService.convertPrice(product.price, prevLocale.currency, currLocale.currency);
-                if (productSale)
-                    convertedSale = productService.convertPrice(product.sale, prevLocale.currency, currLocale.currency);
-            }
-            const localizedPrice = productService.getLocalizedPrice(
-                convertedPrice || product.price,
-                currLocale.locale,
-                currLocale.currency
-            );
-
-            if (productSale) {
-                localizedSale = productService.getLocalizedPrice(
-                    convertedSale || product.sale,
-                    currLocale.locale,
-                    currLocale.currency
-                );
-                setProductSale(localizedSale);
-            }
-            setProductPrice(localizedPrice);
-        };
-        getProductLocalizedPrice();
-    }, [currLocale]);
-
     const btnToDisplay = isAddClicked ? counterBtn : addBtn;
 
     return (
@@ -87,8 +58,14 @@ export default function Card({ product, updateCart, currLocale, prevLocale }) {
             </section>
             <section className="product-info">
                 <div className="prices">
-                    <span className="price">{productPrice}</span>
-                    {product.sale > 0 && <span className="sale">{productPrice}</span>}
+                    <span className="price">
+                        {productService.getProductLocalizedPrice(product.sale || product.price, currLocale, prevLocale)}
+                    </span>
+                    {product.sale > 0 && (
+                        <span className="sale">
+                            {productService.getProductLocalizedPrice(product.price, currLocale, prevLocale)}
+                        </span>
+                    )}
                 </div>
                 <p className="name">{product.name}</p>
                 {btnToDisplay}

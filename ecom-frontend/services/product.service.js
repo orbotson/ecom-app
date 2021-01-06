@@ -2,8 +2,8 @@ import fx from 'money';
 
 export const productService = {
     getPriceDetails,
-    getLocalizedPrice,
     convertPrice,
+    getProductLocalizedPrice,
 };
 
 function getPriceDetails(cart, delivery = 0) {
@@ -30,17 +30,13 @@ function convertPrice(price, from, to) {
     return fx(price).from(from).to(to);
 }
 
-function getLocalizedPrice(num, locale, currency) {
-    return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(num);
+function getProductLocalizedPrice(price, currLocale, prevLocale) {
+    const { locale, currency } = currLocale;
+
+    let convertedPrice;
+    if (currLocale.locale !== 'en-US') {
+        convertedPrice = productService.convertPrice(price, prevLocale.currency, currency);
+    }
+
+    return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(convertedPrice || price);
 }
-
-// const localeInfos = [
-//     { lang: 'English', flagUrl: '/images/us.svg', langLocale: 'en-US', currency: 'USD' },
-//     { lang: 'Hebrew', flagUrl: '/images/il.svg', langLocale: 'he', currency: 'ILS' },
-//     // { lang: 'Arabic', flagUrl: '/images/sa.svg' },
-//     // { lang: 'Chinese', flagUrl: '/images/cn.svg' },
-//     // { lang: 'German', flagUrl: '/images/de.svg' },
-//     // { lang: 'Spanish', flagUrl: '/images/es.svg' },
-// ];
-
-// const { lang, flagUrl, langLocale, currency } = (locale === 'en-US' && localeInfos[0]) || localeInfos[1];

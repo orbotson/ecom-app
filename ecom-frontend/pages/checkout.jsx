@@ -11,7 +11,7 @@ import MultiModal from '../components/MultiModal/MultiModal';
 import DarkScreen from '../components/DarkScreen/DarkScreen';
 
 export default function Checkout() {
-    const { shoppingCart } = useContext(ProductContext);
+    const { shoppingCart, currLocale, prevLocale } = useContext(ProductContext);
     const { loggedInUser } = useContext(UserContext);
     const [prices, setPrices] = useState({});
     const [modalToDisplay, setModalToDisplay] = useState('');
@@ -46,7 +46,7 @@ export default function Checkout() {
         },
     ];
 
-    const responsive = {
+    const responsiveCarousel = {
         desktop: {
             breakpoint: { max: 4000, min: 1024 },
             items: 3,
@@ -65,6 +65,25 @@ export default function Checkout() {
         setPrices(productService.getPriceDetails(shoppingCart));
     }, []);
 
+    const onAddClick = section => {
+        document.body.style.overflowY = 'hidden';
+        setModalToDisplay(section);
+        setIsModalOpen(true);
+    };
+
+    const onEditClick = (section, data) => {
+        setModalToDisplay(section);
+        setEditModalData(data);
+        document.body.style.overflowY = 'hidden';
+        setIsModalOpen(true);
+    };
+
+    const onCloseModal = () => {
+        setEditModalData(null);
+        document.body.style.overflowY = 'auto';
+        setIsModalOpen(false);
+    };
+
     const renderShoppingCart = () => {
         return shoppingCart.length > 0 ? (
             shoppingCart.map(({ amount, priceBy, price, sale, name, _id }) => (
@@ -74,7 +93,9 @@ export default function Checkout() {
                     <span className="details">
                         {name} | {priceBy}
                     </span>
-                    <span className="price">${sale || price}</span>
+                    <span className="price">
+                        {productService.getProductLocalizedPrice(sale || price, currLocale, prevLocale)}
+                    </span>
                 </div>
             ))
         ) : (
@@ -166,25 +187,6 @@ export default function Checkout() {
         });
     };
 
-    const onAddClick = section => {
-        document.body.style.overflowY = 'hidden';
-        setModalToDisplay(section);
-        setIsModalOpen(true);
-    };
-
-    const onEditClick = (section, data) => {
-        setModalToDisplay(section);
-        setEditModalData(data);
-        document.body.style.overflowY = 'hidden';
-        setIsModalOpen(true);
-    };
-
-    const onCloseModal = () => {
-        setEditModalData(null);
-        document.body.style.overflowY = 'auto';
-        setIsModalOpen(false);
-    };
-
     return (
         <div className="checkout">
             <Layout>
@@ -198,22 +200,30 @@ export default function Checkout() {
                         <div className="price-calculation">
                             <div className="sub-total">
                                 <span className="txt">{t('checkout:subTotal')}</span>
-                                <span className="sub-price">${prices.subPrice}</span>
+                                <span className="sub-price">
+                                    {productService.getProductLocalizedPrice(prices.subPrice, currLocale, prevLocale)}
+                                </span>
                             </div>
                             <div className="delivery-fee">
                                 <span className="txt">{t('checkout:deliveryFee')}</span>
-                                <span className="sub-price">${prices.delivery}</span>
+                                <span className="sub-price">
+                                    {productService.getProductLocalizedPrice(prices.delivery, currLocale, prevLocale)}
+                                </span>
                             </div>
                             <div className="discount">
                                 <span className="txt">{t('checkout:discount')}</span>
-                                <span className="sub-price">${prices.discount}</span>
+                                <span className="sub-price">
+                                    {productService.getProductLocalizedPrice(prices.discount, currLocale, prevLocale)}
+                                </span>
                             </div>
                             <div className="total">
                                 <div className="total-label">
                                     <span className="txt">{t('checkout:total')}</span>
                                     <span className="vat-txt"> ({t('checkout:totalVat')})</span>
                                 </div>
-                                <span className="sub-price">${prices.finalPrice}</span>
+                                <span className="sub-price">
+                                    {productService.getProductLocalizedPrice(prices.finalPrice, currLocale, prevLocale)}
+                                </span>
                             </div>
                         </div>
                     </section>
@@ -263,8 +273,7 @@ export default function Checkout() {
                             </div>
                         </div>
                         <section className="credit-cards-container">
-                            {/* <Slider items={renderCreditCards()} breakpoints={sliderBreakpoints} /> */}
-                            <Carousel responsive={responsive}>{renderCreditCards()}</Carousel>
+                            <Carousel responsive={responsiveCarousel}>{renderCreditCards()}</Carousel>
                         </section>
                         <span className="voucher self-start">{t('checkout:voucher')}</span>
                         <small className="terms self-start">

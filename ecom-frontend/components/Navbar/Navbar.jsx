@@ -7,7 +7,7 @@ import { ProductContext } from '../../store/contexts/ProductContext';
 import 'react-dropdown/style.css';
 
 export default function Navbar({ handleMenuClick }) {
-    const { currLocale, changeLocale } = useContext(ProductContext);
+    const { currLocale, availableLocales, changeLocale } = useContext(ProductContext);
     const [page, setPage] = useState('');
     const [lang, setLang] = useState('');
 
@@ -27,15 +27,6 @@ export default function Navbar({ handleMenuClick }) {
         { name: 'Medicine', url: '/images/pages-dropdown/medicine.svg' },
     ];
 
-    const langs = [
-        { lang: 'English', flagUrl: '/images/us.svg', langLocale: 'en-US' },
-        { lang: 'Hebrew', flagUrl: '/images/il.svg', langLocale: 'he' },
-        // { lang: 'Arabic', flagUrl: '/images/sa.svg' },
-        // { lang: 'Chinese', flagUrl: '/images/cn.svg' },
-        // { lang: 'German', flagUrl: '/images/de.svg' },
-        // { lang: 'Spanish', flagUrl: '/images/es.svg' },
-    ];
-
     useEffect(() => {
         const setDefaultValues = () => {
             const { name, url } = pages[0];
@@ -49,15 +40,14 @@ export default function Navbar({ handleMenuClick }) {
                 value: name.toLowerCase(),
             });
 
-            const { flagUrl, lang } = langs[0];
             setLang({
                 label: (
                     <div className="option-container flex align-center">
-                        <img src={flagUrl} />
-                        <span>{lang}</span>
+                        <img src={currLocale.flagUrl} />
+                        <span>{currLocale.lang}</span>
                     </div>
                 ),
-                value: lang.toLowerCase(),
+                value: currLocale.lang.toLowerCase(),
             });
         };
         setDefaultValues();
@@ -75,18 +65,7 @@ export default function Navbar({ handleMenuClick }) {
         };
     });
 
-    const langsOptions = router.locales.map(locale => {
-        let lang = langs[0].lang;
-        let flagUrl = langs[0].flagUrl;
-        let langLocale = langs[0].langLocale;
-        let currency = langs[0].currency;
-        if (locale === 'he') {
-            lang = langs[1].lang;
-            flagUrl = langs[1].flagUrl;
-            langLocale = langs[1].langLocale;
-            currency = langs[1].currency;
-        }
-
+    const langsOptions = availableLocales.map(({ locale, lang, flagUrl }) => {
         return {
             label: (
                 <div className="option-container flex align-center">
@@ -94,17 +73,18 @@ export default function Navbar({ handleMenuClick }) {
                     <span>{lang}</span>
                 </div>
             ),
-            value: langLocale,
+            value: locale,
         };
     });
 
     const onLangChange = ({ value, label }) => {
-        console.log('value:', value);
         changeLocale(value);
         router.push(`${window.location.origin}/${value}${router.route}`);
     };
 
-    const onPageChange = () => {};
+    const onPageChange = () => {
+        //router.push...
+    };
 
     return (
         <nav className="navbar flex space-between align-center">

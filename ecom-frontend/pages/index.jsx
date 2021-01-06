@@ -13,7 +13,7 @@ import DarkScreen from '../components/DarkScreen/DarkScreen';
 import CategoryModal from '../components/CategoryModal/CategoryModal';
 
 export default function Grocery({ products }) {
-    const { shoppingCart, currLocale, prevLocale, updateShoppingCart, changeLocale } = useContext(ProductContext);
+    const { shoppingCart, currLocale, prevLocale, updateShoppingCart } = useContext(ProductContext);
     const [productsCopy, setProductsCopy] = useState([...products]);
     const [productsToShow, setProductsToShow] = useState(productsCopy.slice(0, 5));
     const [next, setNext] = useState(5);
@@ -134,7 +134,9 @@ export default function Grocery({ products }) {
                                 {shoppingCart.length} {t('common:items')}
                             </span>
                         </div>
-                        <span className="price-box flex align-center justify-center">${totalPrice}</span>
+                        <span className="price-box flex align-center justify-center">
+                            {productService.getProductLocalizedPrice(totalPrice, currLocale, prevLocale)}
+                        </span>
                     </button>
                 </main>
                 <section className="cart-modal-wrapper">
@@ -143,6 +145,8 @@ export default function Grocery({ products }) {
                         updateCart={updateCart}
                         closeModal={onCloseModal}
                         isOpen={isCartClicked}
+                        currLocale={currLocale}
+                        prevLocale={prevLocale}
                     />
                 </section>
             </div>

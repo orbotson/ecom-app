@@ -4,13 +4,12 @@ import { ProductReducer } from '../reducers/ProductReducer';
 const initialState = {
     shoppingCart: [],
     prevLocale: {},
-    currLocale: { locale: 'en-US', currency: 'USD' },
+    currLocale: { locale: 'en-US', currency: 'USD', lang: 'English', flagUrl: '/images/us.svg' },
+    availableLocales: [
+        { locale: 'en-US', currency: 'USD', lang: 'English', flagUrl: '/images/us.svg' },
+        { locale: 'he', currency: 'ILS', lang: 'Hebrew', flagUrl: '/images/il.svg' },
+    ],
 };
-
-const availableLocales = [
-    { locale: 'en-US', currency: 'USD', lang: 'English' },
-    { locale: 'he', currency: 'ILS', lang: 'Hebrew' },
-];
 
 //Actions
 const UPDATE_CART = 'UPDATE_CART';
@@ -26,7 +25,7 @@ export const ProductContextProvider = ({ children }) => {
     }
 
     function changeLocale(locale) {
-        const nextLocale = availableLocales.find(loc => loc.locale === locale);
+        const nextLocale = state.availableLocales.find(loc => loc.locale === locale);
         dispatch({ type: CHANGE_LOCALE, nextLocale });
     }
 
@@ -36,6 +35,7 @@ export const ProductContextProvider = ({ children }) => {
                 shoppingCart: state.shoppingCart,
                 prevLocale: state.prevLocale,
                 currLocale: state.currLocale,
+                availableLocales: state.availableLocales,
                 updateShoppingCart,
                 changeLocale,
             }}

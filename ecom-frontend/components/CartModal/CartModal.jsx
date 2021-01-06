@@ -3,7 +3,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 import useTranslation from 'next-translate/useTranslation';
 import { productService } from '../../services/product.service.js';
 
-export default function CartModal({ cart, closeModal, isOpen }) {
+export default function CartModal({ cart, closeModal, isOpen, currLocale, prevLocale }) {
     let { t } = useTranslation();
 
     const getFinalPrice = () => {
@@ -26,10 +26,18 @@ export default function CartModal({ cart, closeModal, isOpen }) {
                     </div>
                     <div className="product-info flex flex-column">
                         <span className="name">{name}</span>
-                        <span className="unit-price">${price}</span>
-                        <span className="price-details">{`${amount} X ${price} ${priceBy}`}</span>
+                        <span className="unit-price">
+                            {productService.getProductLocalizedPrice(price, currLocale, prevLocale)}
+                        </span>
+                        <span className="price-details">{`${amount} X ${productService.getProductLocalizedPrice(
+                            price,
+                            currLocale,
+                            prevLocale
+                        )} ${priceBy}`}</span>
                     </div>
-                    <span className="price">${price * amount}</span>
+                    <span className="price">
+                        {productService.getProductLocalizedPrice(price * amount, currLocale, prevLocale)}
+                    </span>
                     <span className="remove-btn">X</span>
                 </section>
             );
@@ -63,7 +71,9 @@ export default function CartModal({ cart, closeModal, isOpen }) {
                     <Link className="checkout-btn-container" href="/checkout">
                         <button className="checkout-btn flex space-between" onClick={closeModal}>
                             <span className="self-center">{t('common:checkout')}</span>
-                            <span className="total-price flex align-center">${getFinalPrice()}</span>
+                            <span className="total-price flex align-center">
+                                {productService.getProductLocalizedPrice(getFinalPrice(), currLocale, prevLocale)}
+                            </span>
                         </button>
                     </Link>
                 </div>
