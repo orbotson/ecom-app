@@ -32,11 +32,9 @@ function convertPrice(price, from, to) {
 
 function getProductLocalizedPrice(price, currLocale, prevLocale) {
     const { locale, currency } = currLocale;
-
     let convertedPrice;
     if (currLocale.locale !== 'en-US') {
         convertedPrice = productService.convertPrice(price, prevLocale.currency, currency);
     }
-
     return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(convertedPrice || price);
 }

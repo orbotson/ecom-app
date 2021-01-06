@@ -231,3 +231,36 @@
         }
     }
 }
+
+[dir='rtl'] .navbar {
+    .lang-switcher,
+    .page-switcher {
+        .Dropdown-control {
+            width: fit-content;
+            padding: 0px 15px;
+            border: none;
+            &:hover {
+                box-shadow: none;
+            }
+            .Dropdown-placeholder {
+                padding: 0px 15px;
+                .option-container {
+                    cursor: pointer;
+                    img {
+                        border-radius: 2px;
+                        width: 20px;
+                    }
+                    span {
+                        display: none;
+                    }
+                }
+            }
+            .Dropdown-arrow-wrapper {
+                display: none;
+            }
+        }
+        .Dropdown-menu {
+            margin-inline-start: -130px;
+        }
+    }
+}

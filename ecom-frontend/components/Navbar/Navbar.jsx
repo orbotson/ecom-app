@@ -78,6 +78,9 @@ export default function Navbar({ handleMenuClick }) {
     });
 
     const onLangChange = ({ value, label }) => {
+        value === 'he'
+            ? document.getElementsByTagName('html')[0].setAttribute('dir', 'rtl')
+            : document.getElementsByTagName('html')[0].setAttribute('dir', 'ltr');
         changeLocale(value);
         router.push(`${window.location.origin}/${value}${router.route}`);
     };

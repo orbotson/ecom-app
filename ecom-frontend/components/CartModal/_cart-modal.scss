@@ -116,7 +116,7 @@
                 width: calc(100% - 60px);
                 margin: 0 auto;
                 height: 45px;
-                padding: 2px 2px 2px 30px;
+                padding: 2px 2px 2px 2px;
                 background-color: $main-clr;
                 border-radius: 60px;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 21px 36px;
@@ -128,7 +128,8 @@
                 span {
                     font-size: rem(15px);
                     font-weight: bold;
-                    padding: 0 10px 0 5px;
+                    padding: 10px auto;
+                    padding-inline-start: 28px;
                     color: #fff;
                 }
                 .total-price {

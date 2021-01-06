@@ -47,6 +47,15 @@
         }
     }
 }
+
+[dir='rtl'] .mobile-menu {
+    left: auto;
+    right: 0;
+    transform: translateX(100%);
+}
 .active {
-    transform: translate(0, 0);
+    transform: translateX(0);
+}
+[dir='rtl'] .active {
+    transform: translateX(0);
 }
